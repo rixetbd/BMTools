@@ -1,4 +1,4 @@
-# Human Resource Management
+# BMTools - Point Of Sale
 ![Logo](https://raw.githubusercontent.com/rixetbd/HiHr/main/human-resource-banner.jpg)
 
 Laravel Point of sale with invoice.
@@ -17,7 +17,7 @@ Each module performs a separate function within the HRMS that helps with informa
 4. [Composer](https://getcomposer.org/)
 
 
-Human resource management is the strategic and coherent approach to the effective and efficient management of people in a company or organization such that they help their business gain a competitive advantage. It is designed to maximize employee performance in service of an employer's strategic objectives.
+Point Of Sale ....... 150 Words
 
 ### 👨‍💻 Skills & Experiance:
 
