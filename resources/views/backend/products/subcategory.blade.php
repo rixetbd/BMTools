@@ -16,15 +16,25 @@
                     <span>Add Sub Category</span>
                 </div>
                 <div class="card-body">
-                    <form class="theme-form" id="ajaxForm" method="post" action="javascript:void(0)">
+                    <form class="needs-validation" id="ajaxForm" method="post" action="javascript:void(0)">
                         @csrf
+                        <div class="mb-3">
+                            <label class="col-form-label pt-0" for="CategoryID">Category Name</label>
+                            <select class="form-select" id="category_id" name="CategoryID" required>
+                                <option value="">-- Select a category</option>
+                                @foreach ($category as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label class="col-form-label pt-0" for="CategoryName">Sub Category Name</label>
                             <input class="form-control" id="CategoryName" type="text" name="name"
-                                placeholder="Category Name">
+                                placeholder="Sub Category Name" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-danger">Cancel</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
                     </form>
                 </div>
             </div>
@@ -81,11 +91,23 @@
             <form class="theme-form" method="post" action="javascript:void(0)">
                 @csrf
                 <div class="modal-body">
+
                     <div class="mb-3">
-                        <input class="form-control" id="CategoryID" type="text" name="id">
-                        <label class="col-form-label pt-0" for="CategoryName">Category Name</label>
+                        <input class="form-control" id="CategoryID" type="hidden" name="id" required>
+
+                        <label class="col-form-label pt-0" for="CategoryID">Category Name</label>
+                        <select class="form-select" id="MCategoryID" name="MCategoryID" required>
+                            <option value="">-- Select a category</option>
+                            @foreach ($category as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label pt-0" for="CategoryName">Sub Category Name</label>
                         <input class="form-control" id="CategoryNameEdit" type="text" name="name"
-                            placeholder="Category Name">
+                            placeholder="Category Name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,15 +128,16 @@
 <script src="{{asset('assets/backend')}}/js/jsgrid/jsgrid.js"></script>
 
 <script>
-    function cat_edit(id, name) {
+    function cat_edit(id, name, category) {
         $('#CategoryEditModal').modal('show');
         $('#CategoryID').val(id);
+        $(`#MCategoryID option[value=${category}]`).attr('selected','selected');
         $('#CategoryNameEdit').val(name);
     }
 </script>
 
 <script>
-    function auto_categories() {
+    function auto_subcategories() {
         let urlData = `{{route('autosubcategories')}}`;
         $.ajax({
             type: 'POST',
@@ -126,19 +149,24 @@
             }
         });
     }
-    auto_categories();
+    auto_subcategories();
 
     $('#ajaxForm').on('submit', function () {
-        let formUrlData = `{{route('backend.categories.store')}}`;
+        let formUrlData = `{{route('backend.subcategories.store')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
             data: {
+                category_id: $('#category_id').val(),
                 name: $('#CategoryName').val(),
             },
             success: function (data) {
-                auto_categories();
+                auto_subcategories();
+                $("#category_id").val("");
                 $('#CategoryName').val('');
+                notyf.success("Sub Category Saved Successfully!");
+            },error: function (request, status, error) {
+                notyf.error(request.responseJSON.message);
             }
         });
     });
@@ -153,22 +181,25 @@
                 name: $('#CategoryNameEdit').val(),
             },
             success: function (data) {
-                auto_categories();
+                auto_subcategories();
                 $('#CategoryEditModal').modal('hide');
             }
         });
     });
 
-    function cat_distroy(slug) {
-        let formUrlData = `{{route('backend.categories.destroy')}}`;
+    function cat_distroy(id) {
+        let formUrlData = `{{route('backend.subcategories.destroy')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
             data: {
-                "slug": slug,
+                "id": id,
             },
             success: function (data) {
-                auto_categories();
+                auto_subcategories();
+                notyf.success("Category Delete Successfully!");
+            },error: function (request, status, error) {
+                notyf.error('Category Delete Unsuccessfully!');
             }
         });
     }

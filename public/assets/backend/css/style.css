@@ -45906,3 +45906,5 @@ span.twitter-typeahead .tt-suggestion:active {
 /**=====================
     60. RTL CSS Ends
 ==========================**/
+
+.notyf__toast {max-width: 600px !important;}

@@ -24,7 +24,7 @@
                                 placeholder="Category Name">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-danger">Cancel</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
                     </form>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input class="form-control" id="CategoryID" type="text" name="id">
+                        <input id="CategoryID" type="hidden" name="id">
                         <label class="col-form-label pt-0" for="CategoryName">Category Name</label>
                         <input class="form-control" id="CategoryNameEdit" type="text" name="name"
                             placeholder="Category Name">
@@ -127,12 +127,13 @@
                         `<td class="text-center">
                             <button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` + value.id + `','` + value.name + `')"><i class="fa fa-edit"></i></button>` +
                         `<button class="border-0 btn-sm btn-danger" onclick="cat_distroy('` + value
-                        .slug + `')"><i class="fa fa-trash"></i></button></td>` +
+                        .id + `')"><i class="fa fa-trash"></i></button></td>` +
                         `</tr>`;
                 });
                 $("#table_data").html(html);
             },error: function (request, status, error) {
                 $("#table_data").html('<tr><td class="text-center" colspan="4">500 Internal Server Error</td></tr>');
+                notyf.error('500 Internal Server Error');
             }
         });
     }
@@ -149,6 +150,9 @@
             success: function (data) {
                 auto_categories();
                 $('#CategoryName').val('');
+                notyf.success("Category Saved Successfully!");
+            },error: function (request, status, error) {
+                notyf.error(request.responseJSON.message);
             }
         });
     });
@@ -165,20 +169,26 @@
             success: function (data) {
                 auto_categories();
                 $('#CategoryEditModal').modal('hide');
+                notyf.success("Category Update Successfully!");
+            },error: function (request, status, error) {
+                notyf.error('Category Update Unsuccessfully!');
             }
         });
     });
 
-    function cat_distroy(slug) {
+    function cat_distroy(id) {
         let formUrlData = `{{route('backend.categories.destroy')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
             data: {
-                "slug": slug,
+                "id": id,
             },
             success: function (data) {
                 auto_categories();
+                notyf.success("Category Delete Successfully!");
+            },error: function (request, status, error) {
+                notyf.error('Category Delete Unsuccessfully!');
             }
         });
     }

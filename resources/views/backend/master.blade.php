@@ -53,6 +53,8 @@ $currentRouteName = Route::currentRouteName();
     <link id="color" rel="stylesheet" href="{{asset('assets/backend')}}/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
     @yield('custom_style')
 
 </head>
@@ -814,6 +816,7 @@ $currentRouteName = Route::currentRouteName();
     <script src="{{asset('assets/backend')}}/js/owlcarousel/owl.carousel.js"></script>
     <script src="{{asset('assets/backend')}}/js/owlcarousel/owl-custom.js"></script>
     <script src="{{asset('assets/backend')}}/js/dashboard/dashboard_2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{asset('assets/backend')}}/js/script.js"></script>
@@ -821,12 +824,13 @@ $currentRouteName = Route::currentRouteName();
     <!-- login js-->
     <!-- Plugin used-->
     <script>
+
+        var notyf = new Notyf();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
     </script>
     @yield('custom_script')
 </body>

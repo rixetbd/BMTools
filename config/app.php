@@ -187,6 +187,8 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Flasher\Laravel\FlasherServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -213,6 +215,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Flasher' => Flasher\Laravel\Facade\Flasher::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
 ];
