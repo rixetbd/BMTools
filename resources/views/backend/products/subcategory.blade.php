@@ -12,14 +12,14 @@
         <div class="col-sm-12 col-md-4">
             <div class="card">
                 <div class="card-header pb-0">
-                    <h5>Product Categories</h5>
-                    <span>Add Category</span>
+                    <h5>Product Sub Categories</h5>
+                    <span>Add Sub Category</span>
                 </div>
                 <div class="card-body">
                     <form class="theme-form" id="ajaxForm" method="post" action="javascript:void(0)">
                         @csrf
                         <div class="mb-3">
-                            <label class="col-form-label pt-0" for="CategoryName">Category Name</label>
+                            <label class="col-form-label pt-0" for="CategoryName">Sub Category Name</label>
                             <input class="form-control" id="CategoryName" type="text" name="name"
                                 placeholder="Category Name">
                         </div>
@@ -32,8 +32,8 @@
         <div class="col-sm-12 col-md-8">
             <div class="card">
                 <div class="card-header pb-0">
-                    <h5>Categories List</h5>
-                    <span>All Category Information</span>
+                    <h5>Sub Categories List</h5>
+                    <span>All Sub Category Information</span>
                 </div>
 
                 <div class="card-body">
@@ -44,12 +44,13 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Category Name</th>
                                     <th scope="col">Slug</th>
+                                    <th scope="col">Parent Category</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="table_data">
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         <div class="d-flex justify-content-center">
                                             <div class="spinner-border" role="status">
                                                 <span class="visually-hidden">Loading...</span>
@@ -114,25 +115,14 @@
 
 <script>
     function auto_categories() {
-        let urlData = `{{route('autocategories')}}`;
+        let urlData = `{{route('autosubcategories')}}`;
         $.ajax({
             type: 'POST',
             url: `${urlData}`,
             success: function (data) {
-                let html = "";
-                $.each(data.data, function (i, value) {
-                    html += `<tr>` +
-                        `<td>` + (i + 1) + `</td><td>` + value.name + `</td><td>` + value.slug +
-                        `</td>` +
-                        `<td class="text-center">
-                            <button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` + value.id + `','` + value.name + `')"><i class="fa fa-edit"></i></button>` +
-                        `<button class="border-0 btn-sm btn-danger" onclick="cat_distroy('` + value
-                        .slug + `')"><i class="fa fa-trash"></i></button></td>` +
-                        `</tr>`;
-                });
-                $("#table_data").html(html);
+                $("#table_data").html(data.data);
             },error: function (request, status, error) {
-                $("#table_data").html('<tr><td class="text-center" colspan="4">500 Internal Server Error</td></tr>');
+                $("#table_data").html('<tr><td class="text-center" colspan="5">500 Internal Server Error</td></tr>');
             }
         });
     }

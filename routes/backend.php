@@ -26,8 +26,13 @@ Route::middleware('auth')->group(function(){
     Route::controller(CategoryController::class)->prefix('categories')->group(function(){
         Route::get('/index', 'index')->name('backend.categories.index');
         Route::post('/store', 'store')->name('backend.categories.store');
+        Route::post('/update', 'update')->name('backend.categories.update');
         Route::post('/destroy', 'destroy')->name('backend.categories.destroy');
+
+        Route::get('/sub-categories', 'sub_categories')->name('backend.sub.categories');
         Route::post('/autocategories', 'autocategories')->name('autocategories');
+        Route::post('/autosubcategories', 'autosubcategories')->name('autosubcategories');
+
     });
 
 
