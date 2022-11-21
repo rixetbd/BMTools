@@ -112,7 +112,7 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request)
     {
-        Category::where('id', $request->id)->delete();
+        Category::find($request->id)->delete();
         return response()->json([
             'success'=>'success',
         ]);
@@ -158,6 +158,21 @@ class CategoryController extends Controller
     public function sub_destroy(Request $request)
     {
         SubCategory::where('id', $request->id)->delete();
+        return response()->json([
+            'success'=>'success',
+        ]);
+    }
+
+    public function sub_update(Request $request)
+    {
+        // $request->validate([
+        //     'name'=>'required|unique:sub_categories,name',
+        // ]);
+        SubCategory::find($request->id)->update([
+            'category_id'=>$request->category_id,
+            'name'=>$request->name,
+            'slug'=>Str::slug($request->name),
+        ]);
         return response()->json([
             'success'=>'success',
         ]);

@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/store', 'store')->name('backend.categories.store');
         Route::post('/sub-store', 'sub_store')->name('backend.subcategories.store');
         Route::post('/update', 'update')->name('backend.categories.update');
+        Route::post('/sub-update', 'sub_update')->name('backend.subcategories.update');
         Route::post('/destroy', 'destroy')->name('backend.categories.destroy');
         Route::post('/sub-destroy', 'sub_destroy')->name('backend.subcategories.destroy');
 

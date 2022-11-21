@@ -74,7 +74,7 @@ $currentRouteName = Route::currentRouteName();
             <div class="main-header-right row m-0">
                 <div class="main-header-left">
                     <div class="logo-wrapper"><a href="{{route('dashboard')}}">
-                            <h4>{{ config('app.name', 'WantJob') }}</h4>
+                            <h4>{{ config('app.name', 'BMTools') }}</h4>
                             {{-- <img class="img-fluid" src="{{asset('assets/backend')}}/images/logo/logo.png" alt="">
                             --}}
 

@@ -93,7 +93,7 @@
                 <div class="modal-body">
 
                     <div class="mb-3">
-                        <input class="form-control" id="CategoryID" type="hidden" name="id" required>
+                        <input class="form-control" id="SubCategoryID" type="hidden" name="SubCategoryID" required>
 
                         <label class="col-form-label pt-0" for="CategoryID">Category Name</label>
                         <select class="form-select" id="MCategoryID" name="MCategoryID" required>
@@ -130,7 +130,7 @@
 <script>
     function cat_edit(id, name, category) {
         $('#CategoryEditModal').modal('show');
-        $('#CategoryID').val(id);
+        $('#SubCategoryID').val(id);
         $(`#MCategoryID option[value=${category}]`).attr('selected','selected');
         $('#CategoryNameEdit').val(name);
     }
@@ -143,7 +143,11 @@
             type: 'POST',
             url: `${urlData}`,
             success: function (data) {
-                $("#table_data").html(data.data);
+                if (data.data == '') {
+                    $("#table_data").html('<tr><td class="text-center" colspan="5">No Data Added Yet.</td></tr>');
+                }else{
+                    $("#table_data").html(data.data);
+                }
             },error: function (request, status, error) {
                 $("#table_data").html('<tr><td class="text-center" colspan="5">500 Internal Server Error</td></tr>');
             }
@@ -172,12 +176,13 @@
     });
 
     $('#CategoryUpdate').on('click', function () {
-        let formUrlData = `{{route('backend.categories.update')}}`;
+        let formUrlData = `{{route('backend.subcategories.update')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
             data: {
-                id: $('#CategoryID').val(),
+                category_id: $('#MCategoryID').val(),
+                id: $('#SubCategoryID').val(),
                 name: $('#CategoryNameEdit').val(),
             },
             success: function (data) {

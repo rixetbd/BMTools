@@ -119,18 +119,23 @@
             type: 'POST',
             url: `${urlData}`,
             success: function (data) {
-                let html = "";
-                $.each(data.data, function (i, value) {
-                    html += `<tr>` +
-                        `<td>` + (i + 1) + `</td><td>` + value.name + `</td><td>` + value.slug +
-                        `</td>` +
-                        `<td class="text-center">
-                            <button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` + value.id + `','` + value.name + `')"><i class="fa fa-edit"></i></button>` +
-                        `<button class="border-0 btn-sm btn-danger" onclick="cat_distroy('` + value
-                        .id + `')"><i class="fa fa-trash"></i></button></td>` +
-                        `</tr>`;
-                });
-                $("#table_data").html(html);
+
+                if (data.data == '') {
+                    $("#table_data").html('<tr><td class="text-center" colspan="5">No Data Added Yet.</td></tr>');
+                }else{
+                    let html = "";
+                    $.each(data.data, function (i, value) {
+                        html += `<tr>` +
+                            `<td>` + (i + 1) + `</td><td>` + value.name + `</td><td>` + value.slug +
+                            `</td>` +
+                            `<td class="text-center">
+                                <button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` + value.id + `','` + value.name + `')"><i class="fa fa-edit"></i></button>` +
+                            `<button class="border-0 btn-sm btn-danger" onclick="cat_distroy('` + value
+                            .id + `')"><i class="fa fa-trash"></i></button></td>` +
+                            `</tr>`;
+                    });
+                    $("#table_data").html(html);
+                }
             },error: function (request, status, error) {
                 $("#table_data").html('<tr><td class="text-center" colspan="4">500 Internal Server Error</td></tr>');
                 notyf.error('500 Internal Server Error');
@@ -171,7 +176,7 @@
                 $('#CategoryEditModal').modal('hide');
                 notyf.success("Category Update Successfully!");
             },error: function (request, status, error) {
-                notyf.error('Category Update Unsuccessfully!');
+                notyf.error(request.responseJSON.message);
             }
         });
     });

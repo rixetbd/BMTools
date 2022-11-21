@@ -12,6 +12,9 @@ class SubCategory extends Model
     protected $guarded = [];
 
     function getCategoryName(){
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id')->withDefault([
+            'id' => '',
+            'name' => 'N/A',
+        ]);
     }
 }
