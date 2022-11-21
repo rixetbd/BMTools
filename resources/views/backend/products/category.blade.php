@@ -3,6 +3,8 @@
 @section('custom_style')
 <!-- Plugins css start-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/jsgrid.css">
+<!-- Plugins css start-->
+<link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/datatables.css">
 @endsection
 
 @section('content')
@@ -38,7 +40,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="dataTableStyle">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -48,7 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody id="table_data">
-                                <tr>
+                                {{-- <tr>
                                     <td colspan="4">
                                         <div class="d-flex justify-content-center">
                                             <div class="spinner-border" role="status">
@@ -56,7 +58,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
@@ -103,6 +105,9 @@
 <script src="{{asset('assets/backend')}}/js/jsgrid/jsgrid.min.js"></script>
 <script src="{{asset('assets/backend')}}/js/jsgrid/griddata.js"></script>
 <script src="{{asset('assets/backend')}}/js/jsgrid/jsgrid.js"></script>
+<!-- Plugins JS start-->
+<script src="{{asset('assets/backend')}}/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="{{asset('assets/backend')}}/js/datatable/datatables/datatable.custom.js"></script>
 
 <script>
     function cat_edit(id, name) {
@@ -113,13 +118,13 @@
 </script>
 
 <script>
+
     function auto_categories() {
         let urlData = `{{route('autocategories')}}`;
         $.ajax({
             type: 'POST',
             url: `${urlData}`,
             success: function (data) {
-
                 if (data.data == '') {
                     $("#table_data").html('<tr><td class="text-center" colspan="5">No Data Added Yet.</td></tr>');
                 }else{
@@ -135,6 +140,7 @@
                             `</tr>`;
                     });
                     $("#table_data").html(html);
+                    $('#dataTableStyle').DataTable();
                 }
             },error: function (request, status, error) {
                 $("#table_data").html('<tr><td class="text-center" colspan="4">500 Internal Server Error</td></tr>');

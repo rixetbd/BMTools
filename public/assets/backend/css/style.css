@@ -6017,7 +6017,7 @@ table tbody .border-bottom-warning td {
 }
 
 .page-wrapper .page-body-wrapper .page-body {
-    min-height: calc(100vh - 76px);
+    min-height: calc(100vh - 130px);
     margin-top: 76px;
     padding: 0 15px 0 15px;
     position: relative;
@@ -16415,15 +16415,7 @@ div.DTS div.dataTables_scrollBody table {
     margin-right: 5px;
 }
 
-.dataTables_wrapper button {
-    font-weight: 400;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    border-radius: 0.25rem;
-    color: #fff;
-    background-color: #24695c;
-    border: 1px solid #fff;
-}
+
 
 .dataTables_wrapper+.dataTables_wrapper {
     margin-top: 20px;
@@ -16448,11 +16440,6 @@ div.DTS div.dataTables_scrollBody table {
     box-shadow: none;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    border: 1px solid #24695c;
-    color: #2c323f !important;
-    background: transparent !important;
-}
 
 .dataTables_wrapper .dataTables_length {
     margin-bottom: 30px;
@@ -16474,7 +16461,6 @@ div.DTS div.dataTables_scrollBody table {
 .dataTables_wrapper table.dataTable tbody td,
 .dataTables_wrapper table.dataTable tbody th {
     background-color: #fff;
-    border: 1px solid #e6edef;
 }
 
 .dataTables_wrapper table.dataTable tbody td.select-checkbox,
@@ -16496,7 +16482,6 @@ div.DTS div.dataTables_scrollBody table {
 
 .dataTables_wrapper table.dataTable th,
 .dataTables_wrapper table.dataTable td {
-    padding: 0.75rem;
     border-color: #e6edef;
 }
 
@@ -45907,4 +45892,31 @@ span.twitter-typeahead .tt-suggestion:active {
     60. RTL CSS Ends
 ==========================**/
 
-.notyf__toast {max-width: 600px !important;}
+.notyf__toast {
+    max-width: 600px !important;
+}
+.table-responsive {
+    overflow-x: unset !important;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #75b1a5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #24695c;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
