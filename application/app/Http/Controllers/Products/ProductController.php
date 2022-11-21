@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.products.products');
     }
 
     /**
@@ -58,17 +58,16 @@ class ProductController extends Controller
         ]);
 
         if($request->hasFile('picture'))
-            {
-                $image = $request->file('picture');
-                $filename = time() . '.' . $image->getClientOriginalExtension();
-                $path = base_path('upload/products/' . $filename);
-                Image::make($image)->save($path); // ->resize(200, 200)
-            }
+        {
+            $image = $request->file('picture');
+            $filename = Str::slug($request->title). '-'.time() . '.' . $image->getClientOriginalExtension();
+            $path = base_path('upload/products/' . $filename);
+            Image::make($image)->fit(400, 300)->save($path);
 
-
-        Product::find($newID)->update([
-            'picture'=>$request->picture->getClientOriginalName(),
-        ]);
+            Product::find($newID)->update([
+                'picture'=>$filename,
+            ]);
+        }
 
         return response()->json([
             'data'=>$request->picture->getClientOriginalName(),
@@ -119,4 +118,28 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function autoproducts()
+    {
+        $product = Product::all();
+        foreach($product as $key=>$value){
+            $data[] = [
+                'id'=>$value->id,
+                'category_id'=>$value->getCategoryName->id,
+                'category_name'=>$value->getCategoryName->name,
+                'subcategory_id'=>$value->getSubCategoryName->id,
+                'subcategory_name'=>$value->getSubCategoryName->name,
+                'title'=>$value->title,
+                'slug'=>$value->slug,
+                'price'=>$value->price,
+                'quantity'=>$value->quantity,
+                'picture'=>$value->picture,
+                'status'=>$value->status,
+            ];
+        }
+        return $data;
+    }
+
+
+
 }

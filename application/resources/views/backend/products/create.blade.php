@@ -71,6 +71,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Upload Photo</label>
                                 <input class="form-control" type="file" name="picture">
+                                <div class="progress mt-2">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" id="percentComplete" style="width:0%;">0%</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -130,9 +133,25 @@ $('#productAdd').on('submit', function (e) {
             url:$(form).attr('action'),
             method:$(form).attr('method'),
             data:new FormData(form),
-            processData:false,
             dataType:'json',
+            processData:false,
             contentType:false,
+            beforeSend: function () {
+                $('#percentComplete').html('0');
+            },
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = ((evt.loaded / evt.total) * 100);
+                        $('#percentComplete').width(percentComplete + '%');
+                        $('#percentComplete').html(percentComplete+'%');
+                    }
+                }, false);
+                return xhr;
+            },
+
+
             success: function (data) {
                 $('input').val('');
                 $('select').val('');

@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware('auth')->group(function(){
 
     Route::controller(ProductController::class)->prefix('products')->group(function(){
+        Route::get('/index', 'index')->name('backend.products.index');
         Route::get('/create', 'create')->name('backend.products.create');
         Route::post('/store', 'store')->name('backend.products.store');
+        Route::post('/autoproducts', 'autoproducts')->name('autoproducts');
     });
-
-    
-
 });
+
+Route::get('/abcd', [ProductController::class, 'autoproducts']);
