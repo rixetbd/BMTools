@@ -19,10 +19,11 @@ return new class extends Migration
             $table->integer('subcategory_id');
             $table->string('title');
             $table->string('slug');
-            $table->integer('quantity');
             $table->integer('price');
+            $table->integer('quantity');
             $table->text('description');
             $table->string('author');
+            $table->string('picture')->nullable();
             $table->string('status')->default(1);
             $table->timestamps();
         });

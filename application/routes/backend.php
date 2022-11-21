@@ -16,13 +16,6 @@ Route::get('/user', [App\Http\Controllers\HomeController::class, 'user_index'])-
 
 Route::middleware('auth')->group(function(){
 
-    Route::controller(ProductController::class)->prefix('products')->group(function(){
-
-        Route::get('/create', 'create')->name('backend.products.create');
-        Route::post('/store', 'store')->name('backend.products.store');
-
-    });
-
     Route::controller(CategoryController::class)->prefix('categories')->group(function(){
         Route::get('/index', 'index')->name('backend.categories.index');
         Route::post('/store', 'store')->name('backend.categories.store');
@@ -31,11 +24,9 @@ Route::middleware('auth')->group(function(){
         Route::post('/sub-update', 'sub_update')->name('backend.subcategories.update');
         Route::post('/destroy', 'destroy')->name('backend.categories.destroy');
         Route::post('/sub-destroy', 'sub_destroy')->name('backend.subcategories.destroy');
-
         Route::get('/sub-categories', 'sub_categories')->name('backend.sub.categories');
         Route::post('/autocategories', 'autocategories')->name('autocategories');
         Route::post('/autosubcategories', 'autosubcategories')->name('autosubcategories');
-
     });
 
     Route::get('/test', function(){
