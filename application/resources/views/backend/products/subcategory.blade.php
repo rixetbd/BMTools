@@ -3,6 +3,9 @@
 @section('custom_style')
 <!-- Plugins css start-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/jsgrid.css">
+<!-- Plugins css start-->
+<link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/datatables.css">
+
 @endsection
 
 @section('content')
@@ -23,7 +26,7 @@
                             <select class="form-select" id="category_id" name="CategoryID" required>
                                 <option value="">-- Select a category</option>
                                 @foreach ($category as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -48,7 +51,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="dataTableStyle">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -99,7 +102,7 @@
                         <select class="form-select" id="MCategoryID" name="MCategoryID" required>
                             <option value="">-- Select a category</option>
                             @foreach ($category as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -112,7 +115,8 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="button" type="submit" id="CategoryUpdate" data-bs-dismiss="modal">Category Update</button>
+                    <button class="btn btn-primary" type="button" type="submit" id="CategoryUpdate"
+                        data-bs-dismiss="modal">Category Update</button>
                 </div>
             </form>
         </div>
@@ -126,34 +130,54 @@
 <script src="{{asset('assets/backend')}}/js/jsgrid/jsgrid.min.js"></script>
 <script src="{{asset('assets/backend')}}/js/jsgrid/griddata.js"></script>
 <script src="{{asset('assets/backend')}}/js/jsgrid/jsgrid.js"></script>
+<!-- Plugins JS start-->
+<script src="{{asset('assets/backend')}}/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="{{asset('assets/backend')}}/js/datatable/datatables/datatable.custom.js"></script>
 
 <script>
     function cat_edit(id, name, category) {
         $('#CategoryEditModal').modal('show');
         $('#SubCategoryID').val(id);
-        $(`#MCategoryID option[value=${category}]`).attr('selected','selected');
+        $(`#MCategoryID option[value=${category}]`).attr('selected', 'selected');
         $('#CategoryNameEdit').val(name);
     }
+
 </script>
 
 <script>
-    function auto_subcategories() {
-        let urlData = `{{route('autosubcategories')}}`;
-        $.ajax({
-            type: 'POST',
-            url: `${urlData}`,
-            success: function (data) {
-                if (data.data == '') {
-                    $("#table_data").html('<tr><td class="text-center" colspan="5">No Data Added Yet.</td></tr>');
-                }else{
-                    $("#table_data").html(data.data);
+    $('#dataTableStyle').DataTable({
+        ajax: {
+            url: `{{route('autosubcategories')}}`,
+            dataSrc: ''
+        },
+        columns: [{
+                data: null,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1;
                 }
-            },error: function (request, status, error) {
-                $("#table_data").html('<tr><td class="text-center" colspan="5">500 Internal Server Error</td></tr>');
-            }
-        });
-    }
-    auto_subcategories();
+            },
+            {
+                data: 'name'
+            },
+            {
+                data: 'slug'
+            },
+            {
+                data: 'category_name'
+            },
+            {
+                "data": null, // (data, type, row)
+                className: "text-center",
+                render: function (data) {
+                    return `<button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` +
+                        data.id + `','` + data.name + `','` + data.category_id +
+                        `')"><i class="fa fa-edit"></i></button>` +
+                        `<button class="border-0 btn-sm btn-danger me-2" onclick="cat_distroy('` +
+                        data.id + `')"><i class="fa fa-trash"></i></button>`;
+                },
+            },
+        ]
+    });
 
     $('#ajaxForm').on('submit', function () {
         let formUrlData = `{{route('backend.subcategories.store')}}`;
@@ -165,11 +189,12 @@
                 name: $('#CategoryName').val(),
             },
             success: function (data) {
-                auto_subcategories();
+                $('#dataTableStyle').DataTable().ajax.reload();
                 $("#category_id").val("");
                 $('#CategoryName').val('');
                 notyf.success("Sub Category Saved Successfully!");
-            },error: function (request, status, error) {
+            },
+            error: function (request, status, error) {
                 notyf.error(request.responseJSON.message);
             }
         });
@@ -186,7 +211,7 @@
                 name: $('#CategoryNameEdit').val(),
             },
             success: function (data) {
-                auto_subcategories();
+                $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryEditModal').modal('hide');
             }
         });
@@ -201,9 +226,10 @@
                 "id": id,
             },
             success: function (data) {
-                auto_subcategories();
+                $('#dataTableStyle').DataTable().ajax.reload();
                 notyf.success("Category Delete Successfully!");
-            },error: function (request, status, error) {
+            },
+            error: function (request, status, error) {
                 notyf.error('Category Delete Unsuccessfully!');
             }
         });

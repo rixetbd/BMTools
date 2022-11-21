@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Products\CategoryController;
-use App\Http\Controllers\Products\ProductController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,13 +22,15 @@ Route::middleware('auth')->group(function(){
         Route::post('/sub-update', 'sub_update')->name('backend.subcategories.update');
         Route::post('/destroy', 'destroy')->name('backend.categories.destroy');
         Route::post('/sub-destroy', 'sub_destroy')->name('backend.subcategories.destroy');
+        Route::post('/get-subcategory-auto', 'get_subcategory_auto')->name('backend.get_subcategory_auto');
         Route::get('/sub-categories', 'sub_categories')->name('backend.sub.categories');
-        Route::post('/autocategories', 'autocategories')->name('autocategories');
-        Route::post('/autosubcategories', 'autosubcategories')->name('autosubcategories');
+        Route::get('/autocategories', 'autocategories')->name('autocategories');
+        Route::get('/autosubcategories', 'autosubcategories')->name('autosubcategories');
     });
 
     Route::get('/test', function(){
         return response()->view('backend.products.category', ['name' => 'rocky']);
     });
+
 
 });

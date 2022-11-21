@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Products;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -40,7 +45,34 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // return $request->picture->getClientOriginalName();
-        return $request->all();
+        $newID = Product::insertGetId([
+            'category_id'=>$request->category_id,
+            'subcategory_id'=>$request->subcategory_id,
+            'title'=>$request->title,
+            'slug'=>Str::slug($request->title),
+            'price'=>$request->price,
+            'quantity'=>$request->quantity,
+            'description'=>$request->description,
+            'author'=>Auth::user()->name,
+            'created_at'=>Carbon::now(),
+        ]);
+
+        if($request->hasFile('picture'))
+            {
+                $image = $request->file('picture');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $path = base_path('upload/products/' . $filename);
+                Image::make($image)->save($path); // ->resize(200, 200)
+            }
+
+
+        Product::find($newID)->update([
+            'picture'=>$request->picture->getClientOriginalName(),
+        ]);
+
+        return response()->json([
+            'data'=>$request->picture->getClientOriginalName(),
+        ]);
     }
 
     /**

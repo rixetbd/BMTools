@@ -50,15 +50,6 @@
                                 </tr>
                             </thead>
                             <tbody id="table_data">
-                                {{-- <tr>
-                                    <td colspan="4">
-                                        <div class="d-flex justify-content-center">
-                                            <div class="spinner-border" role="status">
-                                                <span class="visually-hidden">Loading...</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
@@ -91,7 +82,8 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="button" type="submit" id="CategoryUpdate" data-bs-dismiss="modal">Category Update</button>
+                    <button class="btn btn-primary" type="button" type="submit" id="CategoryUpdate"
+                        data-bs-dismiss="modal">Category Update</button>
                 </div>
             </form>
         </div>
@@ -110,45 +102,44 @@
 <script src="{{asset('assets/backend')}}/js/datatable/datatables/datatable.custom.js"></script>
 
 <script>
-    function cat_edit(id, name) {
-        $('#CategoryEditModal').modal('show');
-        $('#CategoryID').val(id);
-        $('#CategoryNameEdit').val(name);
-    }
+function cat_edit(id, name) {
+    $('#CategoryEditModal').modal('show');
+    $('#CategoryID').val(id);
+    $('#CategoryNameEdit').val(name);
+}
 </script>
 
 <script>
 
-    function auto_categories() {
-        let urlData = `{{route('autocategories')}}`;
-        $.ajax({
-            type: 'POST',
-            url: `${urlData}`,
-            success: function (data) {
-                if (data.data == '') {
-                    $("#table_data").html('<tr><td class="text-center" colspan="5">No Data Added Yet.</td></tr>');
-                }else{
-                    let html = "";
-                    $.each(data.data, function (i, value) {
-                        html += `<tr>` +
-                            `<td>` + (i + 1) + `</td><td>` + value.name + `</td><td>` + value.slug +
-                            `</td>` +
-                            `<td class="text-center">
-                                <button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` + value.id + `','` + value.name + `')"><i class="fa fa-edit"></i></button>` +
-                            `<button class="border-0 btn-sm btn-danger" onclick="cat_distroy('` + value
-                            .id + `')"><i class="fa fa-trash"></i></button></td>` +
-                            `</tr>`;
-                    });
-                    $("#table_data").html(html);
-                    $('#dataTableStyle').DataTable();
+    $('#dataTableStyle').DataTable({
+        ajax: {
+            url: `{{route('autocategories')}}`,
+            dataSrc: ''
+        },
+        columns: [{
+                data: null,
+                render: function (data, type, full, meta) {
+                    return meta.row + 1;
                 }
-            },error: function (request, status, error) {
-                $("#table_data").html('<tr><td class="text-center" colspan="4">500 Internal Server Error</td></tr>');
-                notyf.error('500 Internal Server Error');
-            }
-        });
-    }
-    auto_categories();
+            },
+            {
+                data: 'name'
+            },
+            {
+                data: 'slug'
+            },
+            {
+                "data": null, // (data, type, row)
+                className: "text-center",
+                render: function (data) {
+                    return `<button class="border-0 btn-sm btn-info me-2" onclick="cat_edit('` +
+                        data.id + `','` + data.name + `')"><i class="fa fa-edit"></i></button>` +
+                        `<button class="border-0 btn-sm btn-danger me-2" onclick="cat_distroy('` +
+                        data.id + `')"><i class="fa fa-trash"></i></button>`;
+                },
+            },
+        ]
+    });
 
     $('#ajaxForm').on('submit', function () {
         let formUrlData = `{{route('backend.categories.store')}}`;
@@ -159,10 +150,11 @@
                 name: $('#CategoryName').val(),
             },
             success: function (data) {
-                auto_categories();
+                $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryName').val('');
                 notyf.success("Category Saved Successfully!");
-            },error: function (request, status, error) {
+            },
+            error: function (request, status, error) {
                 notyf.error(request.responseJSON.message);
             }
         });
@@ -178,10 +170,11 @@
                 name: $('#CategoryNameEdit').val(),
             },
             success: function (data) {
-                auto_categories();
+                $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryEditModal').modal('hide');
                 notyf.success("Category Update Successfully!");
-            },error: function (request, status, error) {
+            },
+            error: function (request, status, error) {
                 notyf.error(request.responseJSON.message);
             }
         });
@@ -196,9 +189,10 @@
                 "id": id,
             },
             success: function (data) {
-                auto_categories();
+                $('#dataTableStyle').DataTable().ajax.reload();
                 notyf.success("Category Delete Successfully!");
-            },error: function (request, status, error) {
+            },
+            error: function (request, status, error) {
                 notyf.error('Category Delete Unsuccessfully!');
             }
         });

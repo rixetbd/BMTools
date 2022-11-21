@@ -11,7 +11,7 @@
     <div class="row">
 
         <div class="col-sm-12 col-md-12 col-xl-12">
-            <form class="card" action="{{route('backend.products.store')}}" method="POST" enctype="multipart/form-data">
+            <form class="card" action="{{route('backend.products.store')}}" method="POST" enctype="multipart/form-data" id="productAdd">
                 @csrf
                 <div class="card-header pb-0">
                     <h4 class="card-title mb-0">Add Product</h4>
@@ -44,8 +44,8 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label class="form-label" for="subcategory_id">Sub Category</label>
-                                <select class="form-control btn-square" name="subcategory_id" id="subcategory_id" required>
-                                    <option value="1">-- Select a category</option>
+                                <select class="form-select" name="subcategory_id" id="subcategory_id" required>
+                                    <option value="1">-- Select a sub category</option>
                                 </select>
                             </div>
                         </div>
@@ -95,8 +95,55 @@
 
 <script>
     $('#category_id').on('change', function(){
-        alert($('#category_id').val());
+
+        $.ajax({
+            type: "POST",
+            url: `{{route('backend.get_subcategory_auto')}}`,
+            data: {
+                category_id: $('#category_id').val(),
+            },
+            success: function (data) {
+
+                let html = '<option value="">-- Select a sub category</option>';
+
+                $.each(data.data, function (i, value) {
+                    html += `<option value="${value.id}">${value.name}</option>`;
+                });
+
+                $('#subcategory_id').html(html);
+            },
+            error: function (request, status, error) {
+                notyf.error(request.responseJSON.message);
+            }
+        });
     });
+</script>
+
+<script>
+$('#productAdd').on('submit', function (e) {
+    e.preventDefault();
+
+    // alert('Ho');
+
+        var form = this;
+        $.ajax({
+            url:$(form).attr('action'),
+            method:$(form).attr('method'),
+            data:new FormData(form),
+            processData:false,
+            dataType:'json',
+            contentType:false,
+            success: function (data) {
+                $('input').val('');
+                $('select').val('');
+                $('textarea').val('');
+                notyf.success("Product Saved Successfully!");
+            },
+            error: function (request, status, error) {
+                notyf.error(request.responseJSON.message);
+            }
+    });
+});
 </script>
 
 @endsection
