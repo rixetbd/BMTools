@@ -21,51 +21,49 @@
 
     <div class="user-profile">
         <div class="row">
-            <!-- user profile header start-->
-            <div class="col-sm-12">
-                <div class="card profile-header"><img class="img-fluid bg-img-cover"
-                        src="{{asset('assets/backend')}}/images/user-profile/bg-profile.jpg" alt="">
-                    <div class="profile-img-wrrap"><img class="img-fluid bg-img-cover"
-                            src="{{asset('assets/backend')}}/images/user-profile/bg-profile.jpg" alt=""></div>
-                    <div class="userpro-box">
-                        <div class="img-wrraper">
-                            <div class="avatar"><img class="img-fluid" alt="" src="{{asset('assets/backend')}}/images/user/7.jpg"></div><a
-                                class="icon-wrapper" href="edit-profile.html"><i
-                                    class="icofont icofont-pencil-alt-5"></i></a>
+            <div class="col-xl-4">
+                <div class="card">
+                <div class="card-header pb-0">
+                    <h4 class="card-title mb-0">My Profile</h4>
+                    <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                </div>
+                <div class="card-body">
+                    <form>
+                    <div class="row mb-2">
+                        <div class="profile-title">
+                        <div class="media">
+                            @if ($user)
+                            <div class="img_box_100">
+                                <img id="user_pic" class="img-fluid rounded-circle" src="{{asset('application/uploads/users')}}/{{($user->avatar != ''?$user->avatar:'default.png')}}" alt="">
+                            </div>
+                            @endif
+
+                            <div class="media-body p-4">
+                                @if ($user)
+                                    <h3 class="mb-1 f-20 txt-primary">{{$user->name}}</h3>
+                                    <p class="f-12">Author</p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="user-designation">
-                            <div class="title"><a target="_blank" href="">
-                                    <h4>Emay Walter</h4>
-                                    <h6>designer</h6>
-                                </a></div>
-                            <div class="social-media">
-                                <ul class="user-list-social">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="follow">
-                                <ul class="follow-list">
-                                    <li>
-                                        <div class="follow-num counter">325</div><span>Follower</span>
-                                    </li>
-                                    <li>
-                                        <div class="follow-num counter">450</div><span>Following</span>
-                                    </li>
-                                    <li>
-                                        <div class="follow-num counter">500</div><span>Likes</span>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
+                    <div class="mb-3">
+                        <h6 class="form-label">Bio <span class="edit edit_bio"><i class="fa fa-edit"></i></span></h6>
+                        <textarea class="form-control" rows="5" id="user_bio" name="user_bio" placeholder="Describe Yourself" disabled>I’m a Full Stack Developer who is passionate about making error-free websites with Laravel and React.js Framework. A self-taught fast-learner full-stack developer from Dhaka.</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Picture</label>
+                        <input class="form-control" type="file" onchange="document.getElementById('user_pic').src = window.URL.createObjectURL(this.files[0])">
+
+                    </div>
+                    <div class="form-footer">
+                        <button class="btn btn-primary btn-block">Save</button>
+                    </div>
+                    </form>
+                </div>
                 </div>
             </div>
-            <!-- user profile header end-->
-            <div class="col-xl-3 col-lg-12 col-md-5 xl-35">
+            <div class="col-xl-3 col-lg-12 col-md-4 xl-35">
                 <div class="default-according style-1 faq-accordion job-accordion">
                     <div class="row">
                         <div class="col-xl-12">
@@ -124,63 +122,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-9 col-lg-12 col-md-7 xl-65">
-                <div class="row">
-                    <!-- profile post start-->
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="profile-post">
-                                <div class="post-header">
-                                    <div class="media"><img class="img-thumbnail rounded-circle me-3"
-                                            src="{{asset('assets/backend')}}/images/user/7.jpg" alt="Generic placeholder image">
-                                        <div class="media-body align-self-center"><a href="social-app.html">
-                                                <h5 class="user-name">Emay Walter</h5>
-                                            </a>
-                                            <h6>22 Hours ago</h6>
-                                        </div>
-                                    </div>
-                                    <div class="post-setting"><i class="fa fa-ellipsis-h"></i></div>
-                                </div>
-                                <div class="post-body">
-                                    <div class="post-react">
-                                        <ul>
-                                            <li><img class="rounded-circle" src="{{asset('assets/backend')}}/images/user/3.jpg" alt="">
-                                            </li>
-                                            <li><img class="rounded-circle" src="{{asset('assets/backend')}}/images/user/5.jpg" alt="">
-                                            </li>
-                                            <li><img class="rounded-circle" src="{{asset('assets/backend')}}/images/user/1.jpg" alt="">
-                                            </li>
-                                        </ul>
-                                        <h6>+5 people react this post</h6>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                        culpa qui officia deserunt mollit anim id est laborum. </p>
-                                    <ul class="post-comment">
-                                        <li>
-                                            <label><a href="#"><i data-feather="heart"></i>&nbsp;&nbsp;Like<span
-                                                        class="counter">50</span></a></label>
-                                        </li>
-                                        <li>
-                                            <label><a href="#"><i
-                                                        data-feather="message-square"></i>&nbsp;&nbsp;Comment<span
-                                                        class="counter">70</span></a></label>
-                                        </li>
-                                        <li>
-                                            <label><a href="#"><i data-feather="share"></i>&nbsp;&nbsp;share<span
-                                                        class="counter">20</span></a></label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- profile post end-->
-                </div>
-            </div>
             <!-- user profile fifth-style end-->
         </div>
     </div>
@@ -188,4 +129,19 @@
 </div>
 <!-- Container-fluid Ends-->
 
+@endsection
+
+
+@section('custom_script')
+<script>
+    $('.edit_bio').click(function(){
+        if ($('.edit_bio i').hasClass('fa-edit')) {
+            $('#user_bio').removeAttr('disabled');
+            $('.edit_bio').html('<i class="fa fa-floppy-o"></i>');
+        }else{
+            $('#user_bio').attr('disabled', '');
+            $('.edit_bio').html('<i class="fa fa-edit"></i>');
+        }
+    });
+</script>
 @endsection

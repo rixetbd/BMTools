@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -12,10 +13,12 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($username)
     {
-        // return view('backend.users.index');
-        return view('backend.users.profile');
+        $user = User::where('username','=',$username)->first();
+        return view('backend.users.profile',[
+            'user'=>$user,
+        ]);
     }
 
     /**

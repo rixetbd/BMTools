@@ -225,14 +225,14 @@ $currentRouteName = Route::currentRouteName();
             <!-- Page Sidebar Start-->
             <header class="main-nav">
                 <div class="sidebar-user text-center"><a class="setting-primary"
-                        href="{{route('backend.user.index')}}"><i data-feather="settings"></i></a>
+                        href="{{route('backend.user.index', Auth::user()->username)}}"><i data-feather="settings"></i></a>
                     @if (Auth::user())
                     <img class="img-90 rounded-circle"
                         src="{{asset('application/uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}"
                         alt="">
                     @endif
                     {{-- <div class="badge-bottom"><span class="badge badge-primary">New</span></div> --}}
-                    <a href="{{route('backend.user.index')}}">
+                    <a href="{{route('backend.user.index', Auth::user()->username)}}">
 
                         @if (Auth::user())
                         <h6 class="mt-3 f-14 f-w-600">{{Auth::user()->name}}</h6>
@@ -295,7 +295,7 @@ $currentRouteName = Route::currentRouteName();
                                         href="javascript:void(0)"><i data-feather="users"></i><span>Users</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="user-profile.html">Users Profile</a></li>
-                                        <li><a href="{{route('backend.user.index')}}">Users Edit</a></li>
+                                        <li><a href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a></li>
                                         <li><a href="user-cards.html">Users Cards</a></li>
                                     </ul>
                                 </li>

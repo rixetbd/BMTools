@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function(){
 
     Route::controller(UsersController::class)->prefix('users')->group(function(){
-        Route::get('/', 'index')->name('backend.user.index');
+        Route::get('/{username}', 'index')->name('backend.user.index');
 
     });
 

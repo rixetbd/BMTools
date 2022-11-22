@@ -51,7 +51,9 @@
                 <div class="profile-title">
                 <div class="media">
                     @if (Auth::user())
-                        <img class="img-90 rounded-circle" src="{{asset('application/uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}" alt="">
+                    <div class="img_box_100">
+                        <img id="user_pic" class="img-90 rounded-circle" src="{{asset('application/uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}" alt="">
+                    <div class="img_box_100">
                     @endif
 
                     <div class="media-body">
@@ -76,8 +78,8 @@
                 <input class="form-control" type="password" value="password">
             </div>
             <div class="mb-3">
-                <label class="form-label">Website</label>
-                <input class="form-control" type="file">
+                <label class="form-label">Picture</label>
+                <input class="form-control" type="file" onchange="document.getElementById('user_pic').src = window.URL.createObjectURL(this.files[0])">
             </div>
             <div class="form-footer">
                 <button class="btn btn-primary btn-block">Save</button>

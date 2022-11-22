@@ -45902,6 +45902,13 @@ span.twitter-typeahead .tt-suggestion:active {
 table tr{
     vertical-align: middle !important;
 }
+.img_box_100{
+    height: 110px !important;
+    width: 110px !important;
+    border: 6px solid #f8f8f8;
+    overflow: hidden;
+    border-radius: 50%;
+}
 
 
 /* width */
@@ -45924,3 +45931,28 @@ table tr{
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+/* Form Custom CSS || Start */
+.form-label{
+    width: 100%;
+}
+.form-label span.edit{
+    cursor: pointer;
+    float: right;
+    color: #00000085;
+}
+.form-label span.edit:hover{
+    color: #000;
+}
+
+.form-control{
+    transition: .25s ease-in;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: transparent;
+    opacity: 1;
+    padding: 0;
+    border: none;
+}
+/* Form Custom CSS || End */
