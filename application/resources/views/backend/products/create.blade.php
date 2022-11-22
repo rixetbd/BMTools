@@ -125,9 +125,7 @@
 <script>
 $('#productAdd').on('submit', function (e) {
     e.preventDefault();
-
     // alert('Ho');
-
         var form = this;
         $.ajax({
             url:$(form).attr('action'),
@@ -150,8 +148,6 @@ $('#productAdd').on('submit', function (e) {
                 }, false);
                 return xhr;
             },
-
-
             success: function (data) {
                 $('input').val('');
                 $('select').val('');

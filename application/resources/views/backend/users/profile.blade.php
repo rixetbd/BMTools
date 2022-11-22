@@ -23,44 +23,53 @@
         <div class="row">
             <div class="col-xl-4">
                 <div class="card">
-                <div class="card-header pb-0">
-                    <h4 class="card-title mb-0">My Profile</h4>
-                    <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
-                </div>
-                <div class="card-body">
-                    <form>
-                    <div class="row mb-2">
-                        <div class="profile-title">
-                        <div class="media">
-                            @if ($user)
-                            <div class="img_box_100">
-                                <img id="user_pic" class="img-fluid rounded-circle" src="{{asset('application/uploads/users')}}/{{($user->avatar != ''?$user->avatar:'default.png')}}" alt="">
-                            </div>
-                            @endif
+                    <div class="card-header pb-0">
+                        <h4 class="card-title mb-0">My Profile</h4>
+                        <div class="card-options"><a class="card-options-collapse" href="#"
+                                data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a
+                                class="card-options-remove" href="#" data-bs-toggle="card-remove"><i
+                                    class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row mb-2">
+                                <div class="profile-title">
+                                    <div class="media">
+                                        @if ($user)
+                                        <div class="img_box_100">
+                                            <img id="user_pic" class="img-fluid rounded-circle"
+                                                src="{{asset('application/uploads/users')}}/{{($user->avatar != ''?$user->avatar:'default.png')}}"
+                                                alt="">
+                                        </div>
+                                        @endif
 
-                            <div class="media-body p-4">
-                                @if ($user)
-                                    <h3 class="mb-1 f-20 txt-primary">{{$user->name}}</h3>
-                                    <p class="f-12">Author</p>
-                                @endif
+                                        <div class="media-body p-4">
+                                            @if ($user)
+                                            <h3 class="mb-1 f-20 txt-primary">{{$user->name}}</h3>
+                                            <p class="f-12">Author</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="form-label">Bio <span class="edit edit_bio"><i class="fa fa-edit"></i></span></h6>
-                        <textarea class="form-control" rows="5" id="user_bio" name="user_bio" placeholder="Describe Yourself" disabled>I’m a Full Stack Developer who is passionate about making error-free websites with Laravel and React.js Framework. A self-taught fast-learner full-stack developer from Dhaka.</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Picture</label>
-                        <input class="form-control" type="file" onchange="document.getElementById('user_pic').src = window.URL.createObjectURL(this.files[0])">
+                            <div class="mb-3">
+                                <h6 class="form-label">Bio <span class="edit edit_bio"><i class="fa fa-edit"></i></span>
+                                </h6>
+                                <textarea class="form-control" rows="5" id="user_bio" name="user_bio"
+                                    placeholder="Describe Yourself"
+                                    disabled>I’m a Full Stack Developer who is passionate about making error-free websites with Laravel and React.js Framework. A self-taught fast-learner full-stack developer from Dhaka.</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Picture</label>
+                                <input class="form-control" type="file"
+                                    onchange="document.getElementById('user_pic').src = window.URL.createObjectURL(this.files[0])">
 
+                            </div>
+                            <div class="form-footer">
+                                <button class="btn btn-primary btn-block">Save</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-footer">
-                        <button class="btn btn-primary btn-block">Save</button>
-                    </div>
-                    </form>
-                </div>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-12 col-md-4 xl-35">
@@ -122,6 +131,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- user profile fifth-style end-->
         </div>
     </div>
@@ -134,14 +144,21 @@
 
 @section('custom_script')
 <script>
-    $('.edit_bio').click(function(){
+    $('.edit_bio').click(function () {
         if ($('.edit_bio i').hasClass('fa-edit')) {
             $('#user_bio').removeAttr('disabled');
             $('.edit_bio').html('<i class="fa fa-floppy-o"></i>');
-        }else{
+        } else {
             $('#user_bio').attr('disabled', '');
             $('.edit_bio').html('<i class="fa fa-edit"></i>');
         }
     });
+
 </script>
+
+@endsection
+
+
+@section('custom_style')
+
 @endsection

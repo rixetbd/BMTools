@@ -289,6 +289,15 @@ $currentRouteName = Route::currentRouteName();
                                     </ul>
                                 </li>
 
+                                <li class="dropdown"><a
+                                    class="nav-link menu-title
+                                    {{$currentRouteName == "backend.employee.index"?"active":" "}}"
+                                        href="javascript:void(0)"><i data-feather="airplay"></i><span>Employee</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="{{route('backend.employee.index')}}">All Employees</a></li>
+                                    </ul>
+                                </li>
+
 
                                 <li class="dropdown"><a
                                         class="nav-link menu-title {{$currentRouteName == "backend.user.index"?"active":" "}}"
