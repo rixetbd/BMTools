@@ -61,7 +61,7 @@ class ProductController extends Controller
         {
             $image = $request->file('picture');
             $filename = Str::slug($request->title). '-'.time() . '.' . $image->getClientOriginalExtension();
-            $path = base_path('upload/products/' . $filename);
+            $path = base_path('uploads/products/' . $filename);
             Image::make($image)->fit(400, 300)->save($path);
 
             Product::find($newID)->update([

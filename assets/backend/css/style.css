@@ -45899,6 +45899,10 @@ span.twitter-typeahead .tt-suggestion:active {
     overflow-x: unset !important;
 }
 
+table tr{
+    vertical-align: middle !important;
+}
+
 
 /* width */
 ::-webkit-scrollbar {

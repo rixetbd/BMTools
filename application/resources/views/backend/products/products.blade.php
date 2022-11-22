@@ -112,7 +112,7 @@ $('.gallery a').simpleLightbox();
             },
             {
                 "data": function (data, type) {
-                    return `<a href="../application/upload/products/` + data.picture + `" data-lightbox="roadtrip"><img class="img-thumbnail" src="../application/upload/products/` + data.picture + `" itemprop="thumbnail" alt="Image description"></a>`;
+                    return `<a href="../application/upload/products/` + data.picture + `" data-lightbox="roadtrip"><img class="img-thumbnail w-50" src="../application/upload/products/` + data.picture + `" itemprop="thumbnail" alt="Image description"></a>`;
                 }
             },
             // {

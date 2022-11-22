@@ -228,7 +228,7 @@ $currentRouteName = Route::currentRouteName();
                         href="{{route('backend.user.index')}}"><i data-feather="settings"></i></a>
                     @if (Auth::user())
                     <img class="img-90 rounded-circle"
-                        src="{{asset('uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}"
+                        src="{{asset('application/uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}"
                         alt="">
                     @endif
                     {{-- <div class="badge-bottom"><span class="badge badge-primary">New</span></div> --}}

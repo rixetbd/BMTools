@@ -121,7 +121,8 @@ class CategoryController extends Controller
 
     public function autocategories()
     {
-        $data = Category::all();
+        // $data = Category::all();
+        $data = Category::select('id','name','slug')->get();
         return $data;
     }
 

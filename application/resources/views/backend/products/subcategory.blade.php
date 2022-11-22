@@ -55,7 +55,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Sub Category Name</th>
                                     <th scope="col">Slug</th>
                                     <th scope="col">Parent Category</th>
                                     <th scope="col" class="text-center">Action</th>

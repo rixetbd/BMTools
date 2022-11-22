@@ -50,22 +50,12 @@
             <div class="row mb-2">
                 <div class="profile-title">
                 <div class="media">
-                    @if (Auth::guard('CandidateAuth')->user())
-                        <img class="img-90 rounded-circle" src="{{asset('application/uploads/users')}}/{{(Auth::guard('CandidateAuth')->user()->avatar != ''?Auth::guard('CandidateAuth')->user()->avatar:'default.png')}}" alt="">
-                    @elseif (Auth::guard('CompanyAuth')->user())
-                        <img class="img-90 rounded-circle" src="{{asset('application/uploads/users')}}/{{(Auth::guard('CompanyAuth')->user()->avatar != ''?Auth::guard('CompanyAuth')->user()->avatar:'default.png')}}" alt="">
-                    @elseif (Auth::user())
+                    @if (Auth::user())
                         <img class="img-90 rounded-circle" src="{{asset('application/uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}" alt="">
                     @endif
 
                     <div class="media-body">
-                        @if (Auth::guard('CandidateAuth')->user())
-                            <h3 class="mb-1 f-20 txt-primary">{{Auth::guard('CandidateAuth')->user()->name}}</h3>
-                            <p class="f-12">Candidate</p>
-                        @elseif (Auth::guard('CompanyAuth')->user())
-                            <h3 class="mb-1 f-20 txt-primary">{{Auth::guard('CompanyAuth')->user()->name}}</h3>
-                            <p class="f-12">Company</p>
-                        @elseif (Auth::user())
+                        @if (Auth::user())
                             <h3 class="mb-1 f-20 txt-primary">{{Auth::user()->name}}</h3>
                             <p class="f-12">Author</p>
                         @endif
@@ -75,7 +65,7 @@
             </div>
             <div class="mb-3">
                 <h6 class="form-label">Bio</h6>
-                <textarea class="form-control" rows="5">On the other hand, we denounce with righteous indignation</textarea>
+                <textarea class="form-control" rows="3" placeholder="Describe Yourself"></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email-Address</label>
@@ -87,7 +77,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Website</label>
-                <input class="form-control" placeholder="http://Uplor .com">
+                <input class="form-control" type="file">
             </div>
             <div class="form-footer">
                 <button class="btn btn-primary btn-block">Save</button>
