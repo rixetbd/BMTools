@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Products;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\SubCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SubCategoryController extends Controller
 {
@@ -14,7 +18,10 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::all();
+        return view('backend.products.subcategory',[
+            'category'=>$category,
+        ]);
     }
 
     /**
@@ -35,7 +42,19 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_id'=>'required',
+            'name'=>'required|unique:sub_categories,name',
+        ]);
+        SubCategory::insert([
+            'category_id'=>$request->category_id,
+            'name'=>$request->name,
+            'slug'=>Str::slug($request->name),
+            'created_at'=>Carbon::now(),
+        ]);
+        return response()->json([
+            'success'=>'success',
+        ]);
     }
 
     /**
@@ -67,9 +86,19 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // $request->validate([
+        //     'name'=>'required|unique:sub_categories,name',
+        // ]);
+        SubCategory::find($request->id)->update([
+            'category_id'=>$request->category_id,
+            'name'=>$request->name,
+            'slug'=>Str::slug($request->name),
+        ]);
+        return response()->json([
+            'success'=>'success',
+        ]);
     }
 
     /**
@@ -78,8 +107,36 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        SubCategory::where('id', $request->id)->delete();
+        return response()->json([
+            'success'=>'success',
+        ]);
     }
+
+    public function get_subcategory_auto(Request $request)
+    {
+        $data = SubCategory::where('category_id', $request->category_id)->get();
+        return response()->json([
+            'data'=>$data,
+        ]);
+    }
+
+    public function autosubcategories()
+    {
+        $subcategory = SubCategory::all();
+        $data = [];
+        foreach($subcategory as $key=>$value){
+            $data[] = [
+                'id'=>$value->id,
+                'category_id'=>$value->getCategoryName->id,
+                'category_name'=>$value->getCategoryName->name,
+                'name'=>$value->name,
+                'slug'=>$value->slug,
+            ];
+        }
+        return $data;
+    }
+
 }

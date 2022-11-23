@@ -27,7 +27,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Picture</th>
-                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
                                     <th scope="col">Salary</th>
@@ -165,6 +165,7 @@
         },
         columns: [{
                 data: null,
+                className: "text-center",
                 render: function (data, type, full, meta) {
                     return meta.row + 1;
                 }
@@ -187,6 +188,7 @@
                 data: 'salary'
             },
             {
+                className: "text-center",
                 data: 'experience'
             },
             {
@@ -208,7 +210,10 @@
                         data.id + `')"><i class="fa fa-trash"></i></button>`;
                 },
             },
-        ]
+        ],
+        error: function (request, status, error) {
+            notyf.error('No data available in table');
+        }
     });
 
 

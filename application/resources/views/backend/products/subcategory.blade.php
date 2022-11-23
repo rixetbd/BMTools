@@ -176,7 +176,10 @@
                         data.id + `')"><i class="fa fa-trash"></i></button>`;
                 },
             },
-        ]
+        ],
+        error: function (request, status, error) {
+            notyf.error('No data available in table');
+        }
     });
 
     $('#ajaxForm').on('submit', function () {
@@ -189,9 +192,9 @@
                 name: $('#CategoryName').val(),
             },
             success: function (data) {
-                $('#dataTableStyle').DataTable().ajax.reload();
                 $("#category_id").val("");
                 $('#CategoryName').val('');
+                $('#dataTableStyle').DataTable().ajax.reload();
                 notyf.success("Sub Category Saved Successfully!");
             },
             error: function (request, status, error) {

@@ -8,6 +8,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -114,14 +115,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $product = Product::where('id', $request->id)->first();
+        $img_path = base_path('uploads/products/'.$product->picture);
+        if(File::exists($img_path)) {
+            File::delete($img_path);
+        }
+        $product->delete();
+        return response()->json(['success' => 'success',]);
     }
 
     public function autoproducts()
     {
         $product = Product::all();
+        $data = [];
         foreach($product as $key=>$value){
             $data[] = [
                 'id'=>$value->id,

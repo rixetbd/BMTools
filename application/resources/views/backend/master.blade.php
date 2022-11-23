@@ -279,11 +279,11 @@ $currentRouteName = Route::currentRouteName();
                                         {{$currentRouteName == "backend.categories.index"?"active":" "}}
                                         {{$currentRouteName == "backend.products.index"?"active":" "}}
                                         {{$currentRouteName == "backend.products.create"?"active":" "}}
-                                        {{$currentRouteName == "backend.sub.categories"?"active":" "}}"
+                                        {{$currentRouteName == "backend.subcategories.index"?"active":" "}}"
                                         href="javascript:void(0)"><i data-feather="airplay"></i><span>Products</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{route('backend.categories.index')}}">Categories</a></li>
-                                        <li><a href="{{route('backend.sub.categories')}}">Sub Categories</a></li>
+                                        <li><a href="{{route('backend.subcategories.index')}}">Sub Categories</a></li>
                                         <li><a href="{{route('backend.products.index')}}">Products List</a></li>
                                         <li><a href="{{route('backend.products.create')}}">Products Create</a></li>
                                     </ul>

@@ -14,7 +14,6 @@ Route::middleware('auth')->group(function(){
 
     Route::controller(UsersController::class)->prefix('users')->group(function(){
         Route::get('/{username}', 'index')->name('backend.user.index');
-
     });
 
 
@@ -25,13 +24,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/autoemployees', 'autoemployees')->name('autoemployees');
 
     });
-
-
-    Route::get('/datata', function(){
-        $data = Employee::all();
-        return $data;
-    });
-
 
 
 });

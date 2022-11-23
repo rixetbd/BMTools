@@ -136,27 +136,6 @@ $('.gallery a').simpleLightbox();
         ]
     });
 
-    $('#ajaxForm').on('submit', function () {
-        let formUrlData = `{{route('backend.subcategories.store')}}`;
-        $.ajax({
-            type: "POST",
-            url: `${formUrlData}`,
-            data: {
-                category_id: $('#category_id').val(),
-                name: $('#CategoryName').val(),
-            },
-            success: function (data) {
-                $('#dataTableStyle').DataTable().ajax.reload();
-                $("#category_id").val("");
-                $('#CategoryName').val('');
-                notyf.success("Sub Category Saved Successfully!");
-            },
-            error: function (request, status, error) {
-                notyf.error(request.responseJSON.message);
-            }
-        });
-    });
-
     $('#CategoryUpdate').on('click', function () {
         let formUrlData = `{{route('backend.subcategories.update')}}`;
         $.ajax({
@@ -175,7 +154,7 @@ $('.gallery a').simpleLightbox();
     });
 
     function cat_distroy(id) {
-        let formUrlData = `{{route('backend.subcategories.destroy')}}`;
+        let formUrlData = `{{route('backend.products.destroy')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
@@ -184,10 +163,10 @@ $('.gallery a').simpleLightbox();
             },
             success: function (data) {
                 $('#dataTableStyle').DataTable().ajax.reload();
-                notyf.success("Category Delete Successfully!");
+                notyf.success("Product Delete Successfully!");
             },
             error: function (request, status, error) {
-                notyf.error('Category Delete Unsuccessfully!');
+                notyf.error('Product Delete Unsuccessfully!');
             }
         });
     }

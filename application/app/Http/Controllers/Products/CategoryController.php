@@ -22,14 +22,6 @@ class CategoryController extends Controller
         return view('backend.products.category');
     }
 
-    public function sub_categories()
-    {
-        $category = Category::all();
-        return view('backend.products.subcategory',[
-            'category'=>$category,
-        ]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -126,68 +118,5 @@ class CategoryController extends Controller
         return $data;
     }
 
-    public function get_subcategory_auto(Request $request)
-    {
-        $data = SubCategory::where('category_id', $request->category_id)->get();
-        return response()->json([
-            'data'=>$data,
-        ]);
-    }
-
-    public function autosubcategories()
-    {
-        $subcategory = SubCategory::all();
-        foreach($subcategory as $key=>$value){
-            $data[] = [
-                'id'=>$value->id,
-                'category_id'=>$value->getCategoryName->id,
-                'category_name'=>$value->getCategoryName->name,
-                'name'=>$value->name,
-                'slug'=>$value->slug,
-            ];
-        }
-        return $data;
-    }
-
-
-
-    public function sub_store(Request $request)
-    {
-        $request->validate([
-            'category_id'=>'required',
-            'name'=>'required|unique:sub_categories,name',
-        ]);
-        SubCategory::insert([
-            'category_id'=>$request->category_id,
-            'name'=>$request->name,
-            'slug'=>Str::slug($request->name),
-            'created_at'=>Carbon::now(),
-        ]);
-        return response()->json([
-            'success'=>'success',
-        ]);
-    }
-    public function sub_destroy(Request $request)
-    {
-        SubCategory::where('id', $request->id)->delete();
-        return response()->json([
-            'success'=>'success',
-        ]);
-    }
-
-    public function sub_update(Request $request)
-    {
-        // $request->validate([
-        //     'name'=>'required|unique:sub_categories,name',
-        // ]);
-        SubCategory::find($request->id)->update([
-            'category_id'=>$request->category_id,
-            'name'=>$request->name,
-            'slug'=>Str::slug($request->name),
-        ]);
-        return response()->json([
-            'success'=>'success',
-        ]);
-    }
 
 }
