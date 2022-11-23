@@ -154,16 +154,20 @@
                 data: null,
                 render: function (data, type, full, meta) {
                     return meta.row + 1;
-                }
+                },
+                defaultContent: ''
             },
             {
-                data: 'name'
+                data: 'name',
+                defaultContent: ''
             },
             {
-                data: 'slug'
+                data: 'slug',
+                defaultContent: ''
             },
             {
-                data: 'category_name'
+                data: 'category_name',
+                defaultContent: ''
             },
             {
                 "data": null, // (data, type, row)

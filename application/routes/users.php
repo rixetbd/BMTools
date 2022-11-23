@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function(){
 
     Route::controller(UsersController::class)->prefix('users')->group(function(){
+        Route::post('/autoauth', 'autoauth')->name('backend.user.autoauth');
+
         Route::get('/{username}', 'index')->name('backend.user.index');
+        Route::post('/update', 'update')->name('backend.user.update');
     });
 
 

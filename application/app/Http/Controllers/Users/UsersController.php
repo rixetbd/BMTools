@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class UsersController extends Controller
 {
@@ -71,9 +75,33 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user =  User::where('id', $request->id)->first();
+        $user->update(['bio'=>$request->user_bio]);
+
+
+        // picture
+        if($request->hasFile('picture'))
+        {
+
+            $img_path = base_path('uploads/users/'.$user->avatar);
+            if(File::exists($img_path)) {
+                File::delete($img_path);
+            }
+
+            $image = $request->file('picture');
+            $filename = $user->username.'.' . $image->getClientOriginalExtension();
+            $path = base_path('uploads/users/' . $filename);
+            Image::make($image)->fit(1000, 1000)->save($path);
+            User::where('id', $request->id)->update([
+                'avatar'=>$filename,
+            ]);
+        }
+
+        return response()->json([
+            'success' => 'success',
+        ]);
     }
 
     /**
@@ -85,5 +113,19 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function autoauth(){
+        $user = User::where('id', Auth::user()->id)->first();
+        if ($user->avatar != '') {
+            return response()->json([
+                'src'=> $user->avatar
+            ]);
+        } else {
+            return response()->json([
+                'src'=> 'default.png'
+            ]);
+        }
+
     }
 }

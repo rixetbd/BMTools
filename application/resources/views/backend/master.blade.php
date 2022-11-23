@@ -225,9 +225,10 @@ $currentRouteName = Route::currentRouteName();
             <!-- Page Sidebar Start-->
             <header class="main-nav">
                 <div class="sidebar-user text-center"><a class="setting-primary"
-                        href="{{route('backend.user.index', Auth::user()->username)}}"><i data-feather="settings"></i></a>
+                        href="{{route('backend.user.index', Auth::user()->username)}}"><i
+                            data-feather="settings"></i></a>
                     @if (Auth::user())
-                    <img class="img-90 rounded-circle"
+                    <img class="img-90 rounded-circle" id="auth_user"
                         src="{{asset('application/uploads/users')}}/{{(Auth::user()->avatar != ''?Auth::user()->avatar:'default.png')}}"
                         alt="">
                     @endif
@@ -274,13 +275,13 @@ $currentRouteName = Route::currentRouteName();
                                             data-feather="file-text"></i><span>Dashboard</span></a>
                                 </li>
 
-                                <li class="dropdown"><a
-                                        class="nav-link menu-title
+                                <li class="dropdown"><a class="nav-link menu-title
                                         {{$currentRouteName == "backend.categories.index"?"active":" "}}
                                         {{$currentRouteName == "backend.products.index"?"active":" "}}
                                         {{$currentRouteName == "backend.products.create"?"active":" "}}
                                         {{$currentRouteName == "backend.subcategories.index"?"active":" "}}"
-                                        href="javascript:void(0)"><i data-feather="airplay"></i><span>Products</span></a>
+                                        href="javascript:void(0)"><i
+                                            data-feather="airplay"></i><span>Products</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{route('backend.categories.index')}}">Categories</a></li>
                                         <li><a href="{{route('backend.subcategories.index')}}">Sub Categories</a></li>
@@ -289,10 +290,10 @@ $currentRouteName = Route::currentRouteName();
                                     </ul>
                                 </li>
 
-                                <li class="dropdown"><a
-                                    class="nav-link menu-title
+                                <li class="dropdown"><a class="nav-link menu-title
                                     {{$currentRouteName == "backend.employee.index"?"active":" "}}"
-                                        href="javascript:void(0)"><i data-feather="airplay"></i><span>Employee</span></a>
+                                        href="javascript:void(0)"><i
+                                            data-feather="airplay"></i><span>Employee</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{route('backend.employee.index')}}">All Employees</a></li>
                                     </ul>
@@ -303,9 +304,9 @@ $currentRouteName = Route::currentRouteName();
                                         class="nav-link menu-title {{$currentRouteName == "backend.user.index"?"active":" "}}"
                                         href="javascript:void(0)"><i data-feather="users"></i><span>Users</span></a>
                                     <ul class="nav-submenu menu-content">
-                                        <li><a href="user-profile.html">Users Profile</a></li>
-                                        <li><a href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a></li>
-                                        <li><a href="user-cards.html">Users Cards</a></li>
+                                        <li><a
+                                                href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
@@ -838,14 +839,36 @@ $currentRouteName = Route::currentRouteName();
     <!-- login js-->
     <!-- Plugin used-->
     <script>
-
         var notyf = new Notyf();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
     </script>
+
+    <script>
+        // auth_user
+        function autoauth(){
+            $.ajax({
+                type: "POST",
+                url: `{{route('backend.user.autoauth')}}`,
+                data: {
+                    id: '',
+                },
+                success: function (data) {
+                    let img_src = `../application/uploads/users/${data.src}`; // application/uploads/users/
+                    $('#auth_user').attr('src', img_src);
+                },
+                error: function (request, status, error) {
+                    notyf.error(request.responseJSON.message);
+                }
+            });
+        };
+
+    </script>
+
     @yield('custom_script')
 </body>
 

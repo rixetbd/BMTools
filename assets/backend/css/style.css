@@ -45933,15 +45933,13 @@ table tr{
 }
 
 /* Form Custom CSS || Start */
-.form-label{
-    width: 100%;
-}
-.form-label span.edit{
+
+.dashboard-2-main .card .card-header span.edit{
     cursor: pointer;
     float: right;
     color: #00000085;
 }
-.form-label span.edit:hover{
+.dashboard-2-main .card .card-header span.edit:hover{
     color: #000;
 }
 
