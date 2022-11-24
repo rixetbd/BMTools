@@ -16,9 +16,9 @@
         <div class="col-sm-12 col-md-12">
             <div class="card">
                 <div class="card-header pb-0">
-                    <h5>Employees List <span class="float-end"><button class="btn btn-primary" id="add_employee"> <i
-                                    class="fa fa-plus"></i> Add Employee</button></span></h5>
-                    <span>All Employee Information</span>
+                    <h5>Suppliers List <span class="float-end"><button class="btn btn-primary" id="add_customer"> <i
+                                    class="fa fa-plus"></i> Add Supplier</button></span></h5>
+                    <span>All Supplier Information</span>
                 </div>
 
                 <div class="card-body">
@@ -31,9 +31,9 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
-                                    <th scope="col">Salary</th>
-                                    <th scope="col">Experience</th>
-                                    <th scope="col">Vacation</th>
+                                    <th scope="col">Shopname</th>
+                                    <th scope="col">AC Holder</th>
+                                    <th scope="col">AC Number</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">City</th>
                                     <th scope="col" class="text-center">Action</th>
@@ -57,12 +57,12 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Employee Info</h5>
+                <h5 class="modal-title">Supplier Info</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-4">
-                <form class="" action="{{route('backend.employee.store')}}" method="POST" enctype="multipart/form-data"
-                    id="employeeAdd">
+                <form class="" action="{{route('backend.suppliers.store')}}" method="POST" enctype="multipart/form-data"
+                    id="customerAdd">
                     @csrf
                     <div class="col-12 d-flex justify-content-center pb-4">
                         <div class="img_box_100" id="img_box_100">
@@ -73,9 +73,9 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col-6">
-                            <input id="employeeID" type="hidden" name="id" value="">
+                            <input id="customerID" type="hidden" name="id" value="">
                             <label class="col-form-label pt-0" for="name">Name</label>
-                            <input class="form-control" id="name" type="text" name="name" placeholder="Employee Name" required>
+                            <input class="form-control" id="name" type="text" name="name" placeholder="Supplier Name" required>
                         </div>
                         <div class="mb-3 col-6">
                             <label class="col-form-label pt-0" for="email">Email</label>
@@ -88,40 +88,55 @@
                             <input class="form-control" id="phone" type="text" name="phone" placeholder="Phone" required>
                         </div>
                         <div class="mb-3 col-6">
-                            <label class="col-form-label pt-0" for="salary">Salary</label>
-                            <input class="form-control" id="salary" type="number" name="salary" placeholder="Salary" required>
+                            <label class="col-form-label pt-0" for="shopname">Shop Name</label>
+                            <input class="form-control" id="shopname" type="shopname" name="shopname" placeholder="Shopname">
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-6">
-                            <label class="col-form-label pt-0" for="experience">Experience</label>
-                            <input class="form-control" id="experience" type="text" name="experience"
-                                placeholder="Experience" required>
+                            <label class="col-form-label pt-0" for="account_holder">Account Holder</label>
+                            <input class="form-control" id="account_holder" type="text" name="account_holder"
+                                placeholder="Account Holder">
                         </div>
+                        <div class="mb-3 col-6">
+                            <label class="col-form-label pt-0" for="account_number">Account Number</label>
+                            <input class="form-control" id="account_number" type="number" name="account_number" placeholder="Account Number" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label class="col-form-label pt-0" for="bank_name">Bank Name</label>
+                            <input class="form-control" id="bank_name" type="text" name="bank_name" placeholder="Bank Name">
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label class="col-form-label pt-0" for="bank_branch">Bank Branch</label>
+                            <input class="form-control" id="bank_branch" type="text" name="bank_branch" placeholder="Bank Branch" required>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="mb-3 col-6">
                             <label class="col-form-label pt-0" for="city">City</label>
-                            <input class="form-control" id="city" type="text" name="city" placeholder="City Name" required>
+                            <input class="form-control" id="city" type="text" name="city" placeholder="City">
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label class="col-form-label pt-0" for="type">Supplier Type</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="">-- Select a category</option>
+                                <option value="1">Distributors</option>
+                                <option value="2">Wholesaler</option>
+                                <option value="3">Broker</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-6">
-                            <label class="col-form-label pt-0" for="nid_no">NID No.</label>
-                            <input class="form-control" id="nid_no" type="number" name="nid_no" placeholder="Nid No.">
+                            <label class="col-form-label pt-0" for="address">Address</label>
+                            <input class="form-control" id="address" type="text" name="address" placeholder="Address" required>
                         </div>
                         <div class="mb-3 col-6">
                             <label class="col-form-label pt-0" for="picture">Picture</label>
                             <input class="form-control" type="file" name="picture" id="picture"
                                 onchange="document.getElementById('user_pic').src = window.URL.createObjectURL(this.files[0])">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3 col-6">
-                            <label class="col-form-label pt-0" for="vacation">Vacation</label>
-                            <input class="form-control" id="vacation" type="number" name="vacation" placeholder="Vacation" required>
-                        </div>
-                        <div class="mb-3 col-6">
-                            <label class="col-form-label pt-0" for="address">Address</label>
-                            <input class="form-control" id="address" type="text" name="address" placeholder="Address" required>
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Save</button>
@@ -150,25 +165,18 @@
         $('#picture').click();
     });
 
-
-    $('#add_employee').click(() => {
+    $('#add_customer').click(() => {
         $('#user_pic').attr('src', 'application/uploads/users/default.png');
         $('input').val('');
         $('#CategoryEditModal').modal('show');
     });
-
-    // function cat_edit(id, name) {
-    //     $('#CategoryEditModal').modal('show');
-    //     $('#CategoryID').val(id);
-    //     $('#CategoryNameEdit').val(name);
-    // }
 
 </script>
 
 <script>
     $('#dataTableStyle').DataTable({
         ajax: {
-            url: `{{route('autoemployees')}}`,
+            url: `{{route('autosuppliers')}}`,
             dataSrc: ''
         },
         columns: [{
@@ -180,7 +188,7 @@
             },
             {
                 "data": function (data, type) {
-                    return `<a href="application/uploads/employee/` + data.picture + `" data-lightbox="roadtrip"><img class="img-thumbnail w-50" src="application/uploads/employee/` + data.picture + `" itemprop="thumbnail" alt="Image description"></a>`;
+                    return `<a href="application/uploads/suppliers/` + data.picture + `" data-lightbox="roadtrip"><img class="img-thumbnail w-50" src="application/uploads/suppliers/` + data.picture + `" itemprop="thumbnail" alt="Image description"></a>`;
                 }
             },
             {
@@ -193,14 +201,14 @@
                 data: 'phone'
             },
             {
-                data: 'salary'
+                data: 'shopname'
             },
             {
                 className: "text-center",
-                data: 'experience'
+                data: 'account_holder'
             },
             {
-                data: 'vacation'
+                data: 'account_number'
             },
             {
                 data: 'address'
@@ -224,58 +232,45 @@
         }
     });
 
-
-    // $('#CategoryUpdate').on('click', function () {
-    //     let formUrlData = `{{route('backend.categories.update')}}`;
-    //     $.ajax({
-    //         type: "POST",
-    //         url: `${formUrlData}`,
-    //         data: {
-    //             id: $('#CategoryID').val(),
-    //             name: $('#CategoryNameEdit').val(),
-    //         },
-    //         success: function (data) {
-    //             $('#dataTableStyle').DataTable().ajax.reload();
-    //             $('#CategoryEditModal').modal('hide');
-    //             notyf.success("Category Update Successfully!");
-    //         },
-    //         error: function (request, status, error) {
-    //             notyf.error(request.responseJSON.message);
-    //         }
-    //     });
-    // });
-
     function cat_edit(id) {
         $.ajax({
             type: "POST",
-            url: `{{route('backend.employee.edit')}}`,
+            url: `{{route('backend.suppliers.edit')}}`,
             data: {
                 "id": id,
             },
             success: function (data) {
-                $('#employeeAdd input').val( );
+                $('#customerAdd input').val( );
 
-                $('#user_pic').attr('src', `./application/uploads/employee/${data.employee.picture}`);
-                $('#employeeID').val(data.employee.id);
-                $('#name').val(data.employee.name);
-                $('#email').val(data.employee.email);
-                $('#phone').val(data.employee.phone);
-                $('#salary').val(data.employee.salary);
-                $('#city').val(data.employee.city);
-                $('#experience').val(data.employee.experience);
-                $('#nid_no').val(data.employee.nid_no);
-                $('#vacation').val(data.employee.vacation);
-                $('#address').val(data.employee.address);
+                $('#user_pic').attr('src', `./application/uploads/suppliers/${data.suppliers.picture}`);
+                $('#customerID').val(data.suppliers.id);
+                $('#name').val(data.suppliers.name);
+                $('#email').val(data.suppliers.email);
+                $('#phone').val(data.suppliers.phone);
+                $('#shopname').val(data.suppliers.shopname);
+                $('#account_holder').val(data.suppliers.account_holder);
+                $('#account_number').val(data.suppliers.account_number);
+                $('#bank_name').val(data.suppliers.bank_name);
+                $('#bank_branch').val(data.suppliers.bank_branch);
+                $('#address').val(data.suppliers.address);
+                $('#city').val(data.suppliers.city);
+
+                $('#type option').each(function(i){
+                    if ($(this).val() == data.suppliers.type) {
+                        $(this).attr('selected', '');
+                    }
+                });
+
             },
             error: function (request, status, error) {
-                notyf.error('Employee Delete Unsuccessfully!');
+                notyf.error('Supplier Delete Unsuccessfully!');
             }
         });
         $('#CategoryEditModal').modal('show');
     }
 
     function cat_distroy(id) {
-        let formUrlData = `{{route('backend.employee.destroy')}}`;
+        let formUrlData = `{{route('backend.suppliers.destroy')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
@@ -284,10 +279,10 @@
             },
             success: function (data) {
                 $('#dataTableStyle').DataTable().ajax.reload();
-                notyf.success("Employee Delete Successfully!");
+                notyf.success("Supplier Delete Successfully!");
             },
             error: function (request, status, error) {
-                notyf.error('Employee Delete Unsuccessfully!');
+                notyf.error('Supplier Delete Unsuccessfully!');
             }
         });
     }
@@ -297,7 +292,7 @@
 </script>
 
 <script>
-    $('#employeeAdd').on('submit', function (e) {
+    $('#customerAdd').on('submit', function (e) {
         e.preventDefault();
         // alert('Ho');
         var form = this;
@@ -326,7 +321,7 @@
                 $('input').val('');
                 $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryEditModal').modal('hide');
-                notyf.success("Employee Add Successfully!");
+                notyf.success("Action Successful");
             },
             error: function (request, status, error) {
                 notyf.error(request.responseJSON.message);

@@ -198,7 +198,7 @@
                     function () {
                         //do something special
                         autoauth();
-                    }, 2500);
+                    }, 1500);
                 notyf.success("Employee Update Successfully!");
             },
             error: function (request, status, error) {

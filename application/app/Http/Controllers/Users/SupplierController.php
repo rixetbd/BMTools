@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
-use Carbon\Carbon;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\File;
 
-class EmployeeController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('backend.employee.employee');
+        return view('backend.suppliers.index');
     }
 
     /**
@@ -45,23 +45,23 @@ class EmployeeController extends Controller
             'name' => 'required',
             'email' =>'required',
             'phone' => 'required',
-            'experience' => 'required',
-            'salary' => 'required',
-            'vacation' => 'required',
             'address' => 'required',
             'city' => 'required',
         ]);
 
+
         if(empty($request->id)){
 
-            $newID = Employee::insertGetId([
+            $newID = Supplier::insertGetId([
                 'name' => $request->name,
-                'slug' => Str::slug($request->name). '-'.Str::slug($request->phone),
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'experience' => $request->experience,
-                'salary' => $request->salary,
-                'vacation' => $request->vacation,
+                'shopname' => $request->shopname,
+                'type' => $request->type,
+                'account_holder' => $request->account_holder,
+                'account_number' => $request->account_number,
+                'bank_name' => $request->bank_name,
+                'bank_branch' => $request->bank_branch,
                 'address' => $request->address,
                 'city' => $request->city,
                 'created_at' => Carbon::now()
@@ -71,40 +71,43 @@ class EmployeeController extends Controller
             {
                 $image = $request->file('picture');
                 $filename = Str::slug($request->name). '-'.Str::slug($request->phone). '.' . $image->getClientOriginalExtension();
-                $path = base_path('uploads/employee/' . $filename);
+                $path = base_path('uploads/suppliers/' . $filename);
                 Image::make($image)->fit(1000, 1000)->save($path);
 
-                Employee::find($newID)->update([
+                Supplier::find($newID)->update([
                     'picture'=>$filename,
                 ]);
             }
 
         }else{
-            $employee = Employee::where('id', $request->id)->first();
-            $employee->update([
+            $suppliers = Supplier::where('id', $request->id)->first();
+            $suppliers->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'experience' => $request->experience,
-                'salary' => $request->salary,
-                'vacation' => $request->vacation,
+                'shopname' => $request->shopname,
+                'type' => $request->type,
+                'account_holder' => $request->account_holder,
+                'account_number' => $request->account_number,
+                'bank_name' => $request->bank_name,
+                'bank_branch' => $request->bank_branch,
                 'address' => $request->address,
                 'city' => $request->city,
             ]);
 
             if($request->hasFile('picture'))
             {
-                $img_path = base_path('uploads/employee/'.$employee->picture);
+                $img_path = base_path('uploads/suppliers/'.$suppliers->picture);
                 if(File::exists($img_path)) {
                     File::delete($img_path);
                 }
 
                 $image = $request->file('picture');
                 $filename = Str::slug($request->name). '-'.Str::slug($request->phone). '.' . $image->getClientOriginalExtension();
-                $path = base_path('uploads/employee/' . $filename);
+                $path = base_path('uploads/suppliers/' . $filename);
                 Image::make($image)->fit(1000, 1000)->save($path);
 
-                $employee->update(['picture'=>$filename]);
+                $suppliers->update(['picture'=>$filename]);
             }
         }
 
@@ -133,8 +136,8 @@ class EmployeeController extends Controller
      */
     public function edit(Request $request)
     {
-        $employee = Employee::where('id', $request->id)->first();
-        return response()->json(['employee' => $employee]);
+        $suppliers = Supplier::where('id', $request->id)->first();
+        return response()->json(['suppliers' => $suppliers]);
     }
 
     /**
@@ -157,19 +160,19 @@ class EmployeeController extends Controller
      */
     public function destroy(Request $request)
     {
-        $employee = Employee::where('id', $request->id)->first();
+        $suppliers = Supplier::where('id', $request->id)->first();
 
-        $img_path = base_path('uploads/employee/'.$employee->picture);
+        $img_path = base_path('uploads/suppliers/'.$suppliers->picture);
         if(File::exists($img_path)) {
             File::delete($img_path);
         }
-        $employee->delete();
+        $suppliers->delete();
         return response()->json(['success' => 'success',]);
     }
 
-    public function autoemployees()
+    public function autosuppliers()
     {
-        $data = Employee::all();
+        $data = Supplier::all();
         return $data;
     }
 }

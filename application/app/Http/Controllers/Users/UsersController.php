@@ -84,14 +84,13 @@ class UsersController extends Controller
         // picture
         if($request->hasFile('picture'))
         {
-
             $img_path = base_path('uploads/users/'.$user->avatar);
             if(File::exists($img_path)) {
                 File::delete($img_path);
             }
 
             $image = $request->file('picture');
-            $filename = $user->username.'.' . $image->getClientOriginalExtension();
+            $filename = $user->username.'-'.rand(101,200).'.' . $image->getClientOriginalExtension();
             $path = base_path('uploads/users/' . $filename);
             Image::make($image)->fit(1000, 1000)->save($path);
             User::where('id', $request->id)->update([

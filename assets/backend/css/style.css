@@ -45954,3 +45954,24 @@ table tr{
     border: none;
 }
 /* Form Custom CSS || End */
+
+.img_box_100{
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img_box_overly{
+    position: absolute;
+    height: 40%;
+    width: 100%;
+    background: #d1d1d1;
+    bottom: -40%;
+    padding-top: 5%;
+    text-align: center;
+    transition: .5s ease;
+}
+.img_box_100:hover .img_box_overly{
+    bottom: 0%;
+}

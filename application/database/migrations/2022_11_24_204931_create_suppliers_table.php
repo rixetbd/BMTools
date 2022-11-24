@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone');
-            $table->string('experience');
-            $table->string('picture')->default('default.png');
-            $table->string('nid_no')->default('N/A');
-            $table->string('salary');
-            $table->string('vacation');
             $table->string('address');
+            $table->string('type')->nullable();
+            $table->string('shopname')->nullable();
+            $table->string('picture')->default('default.png');
+            $table->string('account_holder')->nullable();
+            $table->bigInteger('account_number')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_branch')->nullable();
             $table->string('city');
             $table->timestamps();
         });
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('suppliers');
     }
 };
