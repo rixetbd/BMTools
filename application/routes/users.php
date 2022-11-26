@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/edit', 'edit')->name('backend.salary.edit');
         Route::post('/destroy', 'destroy')->name('backend.salary.destroy');
         Route::get('/autosalaries', 'autosalaries')->name('autosalaries');
+        Route::post('/getsalary', 'getsalary')->name('backend.employee.getsalary');
 
     });
 

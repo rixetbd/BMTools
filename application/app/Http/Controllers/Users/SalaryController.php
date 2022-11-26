@@ -134,7 +134,6 @@ class SalaryController extends Controller
 
     public function autosalaries()
     {
-
         $salary = Salary::all();
         $data = [];
         foreach($salary as $key=>$value){
@@ -148,5 +147,14 @@ class SalaryController extends Controller
             ];
         }
         return $data;
+    }
+
+    public function getsalary(Request $request){
+        $salary = Employee::where('id', $request->id)->first()->pluck('salary');
+
+        return response()->json([
+            'salary'=>$salary,
+        ]);
+
     }
 }

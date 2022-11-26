@@ -75,7 +75,7 @@
                         <label class="col-form-label pt-0" for="salary_month">Salary Month</label>
                         <select class="form-select" id="salary_month" name="salary_month" required>
                             <option value="">-- Select a month</option>
-                            <option value="January">January</option>
+                            {{-- <option value="January">January</option>
                             <option value="February">February</option>
                             <option value="March">March</option>
                             <option value="April">April</option>
@@ -86,7 +86,7 @@
                             <option value="September">September</option>
                             <option value="October">October</option>
                             <option value="November">November</option>
-                            <option value="December">December</option>
+                            <option value="December">December</option> --}}
                         </select>
                     </div>
                     <div class="mb-3">
@@ -128,6 +128,22 @@
         $('input').val('');
         $('#CategoryEditModal').modal('show');
     });
+
+    function getMonth(){
+        const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const d = new Date();
+        let lastMonth = month[d.getMonth() -1];
+        var monthHtml = "";
+        for (let i = 0; i < month.length; i++) {
+            if (month[i] == lastMonth) {
+                monthHtml += `<option value="${month[i]}" selected>${month[i]}</option>`;
+            } else {
+                monthHtml += `<option value="${month[i]}">${month[i]}</option>`;
+            }
+        }
+        $('#salary_month').append(monthHtml);
+    }
+    getMonth();
 
 </script>
 
@@ -174,6 +190,24 @@
             notyf.error('No data available in table');
         }
     });
+
+
+    $('#emp_id').on('change', function(){
+        $.ajax({
+            type: "POST",
+            url: `{{route('backend.employee.getsalary')}}`,
+            data: {
+                "id": $('#emp_id').val(),
+            },
+            success: function (data) {
+                $('#paid_amount').val(data.salary);
+            },
+            error: function (request, status, error) {
+                notyf.error('Customer Delete Unsuccessfully!');
+            }
+        });
+    });
+
 
     function cat_edit(id) {
         $.ajax({
