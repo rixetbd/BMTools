@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('emp_id');
             $table->string('salary_month');
+            $table->integer('salary_year');
             $table->integer('paid_amount');
-            $table->integer('bonus')->nullable();
+            $table->integer('bonus')->default('0');
             $table->timestamps();
         });
     }

@@ -45947,7 +45947,7 @@ table tr{
     transition: .25s ease-in;
 }
 
-.form-control:disabled, .form-control[readonly] {
+.form-control[type=text]:disabled, .form-control[type=text][readonly] {
     background-color: transparent;
     opacity: 1;
     padding: 0;

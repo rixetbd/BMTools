@@ -306,7 +306,7 @@
             //     return xhr;
             // },
             success: function (data) {
-                $('input').val('');
+                $('input[type=text]').val('');
                 $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryEditModal').modal('hide');
                 notyf.success("Action Successful");

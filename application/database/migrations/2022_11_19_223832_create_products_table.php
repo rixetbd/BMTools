@@ -25,6 +25,13 @@ return new class extends Migration
             $table->string('author');
             $table->string('picture')->nullable();
             $table->string('status')->default(1);
+            $table->string('product_code');
+            $table->string('product_garage');
+            $table->string('product_route');
+            $table->string('buy_date');
+            $table->string('expire_date');
+            $table->string('buying_price');
+            $table->string('selling_price');
             $table->timestamps();
         });
     }

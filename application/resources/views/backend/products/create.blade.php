@@ -49,6 +49,23 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label pt-0" for="product_garage">Product Supplier</label>
+                                <select class="form-select" id="product_garage" name="product_garage" required>
+                                    <option value="">-- Select a supplier</option>
+                                    @foreach ($supplier as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="price">Shop Name</label>
+                                <input class="form-control" type="number" id="price" name="price" placeholder="Price $" required>
+                            </div>
+                        </div>
                         <div class="col-sm-12 col-md-3">
                             <div class="mb-3">
                                 <label class="form-label" for="price">Price</label>
@@ -149,7 +166,7 @@ $('#productAdd').on('submit', function (e) {
                 return xhr;
             },
             success: function (data) {
-                $('input').val('');
+                $('input[type=text]').val('');
                 $('select').val('');
                 $('textarea').val('');
                 notyf.success("Product Saved Successfully!");

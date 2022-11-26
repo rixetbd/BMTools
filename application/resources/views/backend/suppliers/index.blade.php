@@ -167,7 +167,7 @@
 
     $('#add_customer').click(() => {
         $('#user_pic').attr('src', 'application/uploads/users/default.png');
-        $('input').val('');
+        $('input[type=text]').val('');
         $('#CategoryEditModal').modal('show');
     });
 
@@ -318,7 +318,7 @@
             //     return xhr;
             // },
             success: function (data) {
-                $('input').val('');
+                $('input[type=text]').val('');
                 $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryEditModal').modal('hide');
                 notyf.success("Action Successful");

@@ -29,6 +29,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Salary Month</th>
+                                    <th scope="col">Salary Date</th>
                                     <th scope="col">Salary</th>
                                     <th scope="col">Paid Amount</th>
                                     <th scope="col">Bonus</th>
@@ -57,8 +58,7 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-4">
-                <form class="" action="{{route('backend.salary.store')}}" method="POST" enctype="multipart/form-data"
-                    id="salaryAdd">
+                <form class="" action="{{route('backend.salary.store')}}" method="POST" id="salaryAdd">
                     @csrf
                     <div class="mb-3">
                         {{-- <input id="customerID" type="hidden" name="id" value="">
@@ -71,28 +71,42 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label class="col-form-label pt-0" for="salary_month">Salary Month</label>
-                        <select class="form-select" id="salary_month" name="salary_month" required>
-                            <option value="">-- Select a month</option>
-                            {{-- <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option> --}}
-                        </select>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="col-form-label pt-0" for="salary_month">Salary Month</label>
+                            <select class="form-select" id="salary_month" name="salary_month" required>
+                                <option value="">-- Select a month</option>
+                            </select>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="col-form-label pt-0" for="salary_year">Salary Year</label>
+                            <select class="form-select" id="salary_year" name="salary_year" >
+                                <option value="">-- Select a year</option>
+                                @php
+                                    $loopYear = date('Y');
+                                @endphp
+                                @for ($i = $loopYear - 1; $i < $loopYear + 2; $i++)
+                                    <option value="{{$i}}" {{($i == $loopYear?'selected':'')}}>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="col-form-label pt-0" for="salary_main">Salary</label>
+                            <input class="form-control" id="salary_main" type="number" name="salary_main"
+                            placeholder="Salary" disabled>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="col-form-label pt-0" for="already_paid">Already Paid</label>
+                            <input class="form-control" id="already_paid" type="number" name="already_paid"
+                            placeholder="Already Paid" disabled>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label pt-0" for="paid_amount">Paid Amount</label>
-                        <input class="form-control" id="paid_amount" type="number" name="paid_amount"
-                            placeholder="Paid Amount" required>
+                        <label class="col-form-label pt-0" for="payable_amount">Payable Amount</label>
+                        <input class="form-control" id="payable_amount" type="number" name="payable_amount" max=""
+                            placeholder="Payable Amount" required>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label pt-0" for="bonus">Bonus</label>
@@ -124,8 +138,9 @@
     });
 
     $('#add_customer').click(() => {
-        $('#user_pic').attr('src', 'application/uploads/users/default.png');
-        $('input').val('');
+        $('input[type=text]').val('');
+        $('input[type=number]').val('');
+        $('#emp_id').val('');
         $('#CategoryEditModal').modal('show');
     });
 
@@ -164,15 +179,23 @@
                 data: 'name'
             },
             {
+                className: "text-center",
                 data: 'salary_month'
             },
             {
+                className: "text-center",
+                data: 'salary_date'
+            },
+            {
+                className: "text-center",
                 data: 'salary'
             },
             {
+                className: "text-center",
                 data: 'paid_amount'
             },
             {
+                className: "text-center",
                 data: 'bonus'
             },
             {
@@ -197,10 +220,15 @@
             type: "POST",
             url: `{{route('backend.employee.getsalary')}}`,
             data: {
-                "id": $('#emp_id').val(),
+                "emp_id": $('#emp_id').val(),
+                "salary_month": $('#salary_month').val(),
+                "salary_year": $('#salary_year').val(),
             },
             success: function (data) {
-                $('#paid_amount').val(data.salary);
+                $('#salary_main').val(data.salary);
+                $('#already_paid').val(data.already_paid);
+                $('#payable_amount').attr('max', data.salary - data.already_paid);
+                $('#payable_amount').val(data.salary - data.already_paid);
             },
             error: function (request, status, error) {
                 notyf.error('Customer Delete Unsuccessfully!');
@@ -240,7 +268,7 @@
     }
 
     function cat_distroy(id) {
-        let formUrlData = `{{route('backend.customers.destroy')}}`;
+        let formUrlData = `{{route('backend.salary.destroy')}}`;
         $.ajax({
             type: "POST",
             url: `${formUrlData}`,
@@ -249,10 +277,10 @@
             },
             success: function (data) {
                 $('#dataTableStyle').DataTable().ajax.reload();
-                notyf.success("Customer Delete Successfully!");
+                notyf.success("Salary Delete Successfully!");
             },
             error: function (request, status, error) {
-                notyf.error('Customer Delete Unsuccessfully!');
+                notyf.error('Salary Delete Unsuccessfully!');
             }
         });
     }
@@ -272,7 +300,9 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                $('input').val('');
+                $('input[type=text]').val('');
+                $('input[type=number]').val('');
+                $('#emp_id').val('');
                 $('#dataTableStyle').DataTable().ajax.reload();
                 $('#CategoryEditModal').modal('hide');
                 notyf.success("Action Successful");

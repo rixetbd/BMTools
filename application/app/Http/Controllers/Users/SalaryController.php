@@ -44,34 +44,21 @@ class SalaryController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'emp_id' => 'required',
             'salary_month' =>'required',
-            'paid_amount' => 'required',
+            'salary_year' =>'required',
+            'payable_amount' => 'required|min:1',
         ]);
 
-
-        if(empty($request->id)){
-
-            Salary::insert([
-                'emp_id' => $request->emp_id,
-                'salary_month' => $request->salary_month,
-                'paid_amount' => $request->paid_amount,
-                'bonus' => $request->bonus,
-                'created_at' => Carbon::now()
-            ]);
-
-        }else{
-            $customers = Salary::where('id', $request->id)->first();
-            $customers->update([
-                'emp_id' => $request->emp_id,
-                'salary_month' => $request->salary_month,
-                'paid_amount' => $request->paid_amount,
-                'bonus' => $request->bonus,
-                'created_at' => Carbon::now()
-            ]);
-        }
+        Salary::insert([
+            'emp_id' => $request->emp_id,
+            'salary_month' => $request->salary_month,
+            'salary_year' => $request->salary_year,
+            'paid_amount' => $request->payable_amount,
+            'bonus' => $request->bonus,
+            'created_at' => Carbon::now()
+        ]);
 
         return response()->json([
             'success' => 'success',
@@ -142,6 +129,7 @@ class SalaryController extends Controller
                 'name'=>$value->getEmpName->name,
                 'salary'=>$value->getEmpName->salary,
                 'salary_month'=>$value->salary_month,
+                'salary_date'=>$value->created_at->format('d-M-Y'),
                 'paid_amount'=>$value->paid_amount,
                 'bonus'=>$value->bonus,
             ];
@@ -150,10 +138,19 @@ class SalaryController extends Controller
     }
 
     public function getsalary(Request $request){
-        $salary = Employee::where('id', $request->id)->first()->pluck('salary');
+        $salary = Employee::where('id', $request->emp_id)->get()->pluck('salary');
+
+        $already_paid_data = Salary::where('emp_id','=',$request->emp_id)
+                                ->where('salary_month','=',$request->salary_month)
+                               ->where('salary_year','=',$request->salary_year)->get();
+        $already_paid = 0;
+        foreach ($already_paid_data as $key => $value) {
+            $already_paid += $value->paid_amount;
+        }
 
         return response()->json([
             'salary'=>$salary,
+            'already_paid'=>$already_paid,
         ]);
 
     }

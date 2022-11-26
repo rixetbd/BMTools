@@ -50,6 +50,12 @@
                                 </tr>
                             </thead>
                             <tbody id="table_data">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Name</td>
+                                    <td>Slug</td>
+                                    <td>Action</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -123,10 +129,12 @@ function cat_edit(id, name) {
                 }
             },
             {
-                data: 'name'
+                data: 'name',
+                defaultContent: ''
             },
             {
-                data: 'slug'
+                data: 'slug',
+                defaultContent: ''
             },
             {
                 "data": null, // (data, type, row)
@@ -137,6 +145,7 @@ function cat_edit(id, name) {
                         `<button class="border-0 btn-sm btn-danger me-2" onclick="cat_distroy('` +
                         data.id + `')"><i class="fa fa-trash"></i></button>`;
                 },
+                defaultContent: ''
             },
         ]
     });
