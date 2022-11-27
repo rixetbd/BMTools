@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Users\AttendanceController;
 use App\Http\Controllers\Users\CustomerController;
 use App\Http\Controllers\Users\EmployeeController;
 use App\Http\Controllers\Users\SalaryController;
@@ -29,6 +30,15 @@ Route::middleware('auth')->group(function(){
         Route::post('/edit', 'edit')->name('backend.employee.edit');
         Route::post('/destroy', 'destroy')->name('backend.employee.destroy');
         Route::get('/autoemployees', 'autoemployees')->name('autoemployees');
+
+    });
+
+    Route::controller(AttendanceController::class)->prefix('attendance')->group(function(){
+        Route::get('/', 'index')->name('backend.attendance.index');
+        Route::post('/store', 'store')->name('backend.attendance.store');
+        Route::post('/edit', 'edit')->name('backend.attendance.edit');
+        Route::post('/destroy', 'destroy')->name('backend.attendance.destroy');
+        Route::get('/autoattendances', 'autoattendances')->name('autoattendances');
 
     });
 

@@ -310,6 +310,19 @@ $currentRouteName = Route::currentRouteName();
                                 </li>
 
                                 <li class="dropdown"><a class="nav-link menu-title
+                                    {{$currentRouteName == "backend.attendance.index"?"active":" "}}
+                                    {{$currentRouteName == "backend.salary.index"?"active":" "}}"
+                                        href="javascript:void(0)"><i
+                                            data-feather="airplay"></i><span>Attendances</span></a>
+                                    <ul class="nav-submenu menu-content
+                                    {{$currentRouteName == "backend.attendance.index"?"active":" "}}
+                                    {{$currentRouteName == "backend.salary.index"?"active":" "}}">
+                                        <li><a href="{{route('backend.attendance.index')}}" class="{{$currentRouteName == "backend.attendance.index"?"active":" "}}">Sign Attendance</a></li>
+                                        <li><a href="{{route('backend.salary.index')}}" class="{{$currentRouteName == "backend.salary.index"?"active":" "}}">Salary</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown"><a class="nav-link menu-title
                                     {{$currentRouteName == "backend.customers.index"?"active":" "}}"
                                         href="javascript:void(0)"><i
                                             data-feather="airplay"></i><span>Customers</span></a>
@@ -340,14 +353,15 @@ $currentRouteName = Route::currentRouteName();
 
                                 <li class="sidebar-main-title">
                                     <div>
-                                        <h6>Forms</h6>
+                                        <h6>Settings</h6>
                                     </div>
                                 </li>
-                                <li class="dropdown"> <a class="nav-link menu-title" href="javascript:void(0)"><i
-                                            data-feather="sliders"></i><span>Form Controls </span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a href="form-validation.html">Form Validation</a></li>
-                                        <li><a href="base-input.html">Base Inputs</a></li>
+
+                                <li class="dropdown"><a
+                                    class="nav-link menu-title {{$currentRouteName == "backend.settings.index"?"active":" "}}"
+                                    href="javascript:void(0)"><i data-feather="sliders"></i><span>Settings</span></a>
+                                    <ul class="nav-submenu menu-content {{$currentRouteName == "backend.settings.index"?"active":" "}}">
+                                        <li><a class="{{$currentRouteName == "backend.settings.index"?"active":" "}}" href="{{route('backend.settings.index')}}">General Settings</a></li>
                                     </ul>
                                 </li>
 

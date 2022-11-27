@@ -55,12 +55,16 @@ class ProductController extends Controller
             'subcategory_id'=>$request->subcategory_id,
             'title'=>$request->title,
             'slug'=>Str::slug($request->title),
-            'price'=>$request->price,
+            'supplier_id'=>$request->supplier_id,
+            'product_code'=>$request->product_code,
+            'buy_date'=>$request->buy_date,
+            'buying_price'=>$request->buying_price,
+            'selling_price'=>$request->selling_price,
             'quantity'=>$request->quantity,
             'description'=>$request->description,
-            'author'=>Auth::user()->name,
             'created_at'=>Carbon::now(),
         ]);
+
 
         if($request->hasFile('picture'))
         {
@@ -143,7 +147,8 @@ class ProductController extends Controller
                 'subcategory_name'=>$value->getSubCategoryName->name,
                 'title'=>$value->title,
                 'slug'=>$value->slug,
-                'price'=>$value->price,
+                'buying_price'=>$value->buying_price,
+                'selling_price'=>$value->selling_price,
                 'quantity'=>$value->quantity,
                 'picture'=>$value->picture,
                 'status'=>$value->status,

@@ -14,7 +14,12 @@
             <form class="card" action="{{route('backend.products.store')}}" method="POST" enctype="multipart/form-data" id="productAdd">
                 @csrf
                 <div class="card-header pb-0">
-                    <h4 class="card-title mb-0">Add Product</h4>
+                    <h4 class="card-title mb-0">Add Product
+                        <span class="float-end">
+                            <a class="btn btn-primary" href="{{route('backend.products.index')}}">Check Products List
+                            </a>
+                        </span>
+                    </h4>
                     <span>Add a new product</span>
                     <div class="card-options"><a class="card-options-collapse" href="#"
                             data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a
@@ -51,8 +56,8 @@
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="mb-3">
-                                <label class="form-label pt-0" for="product_garage">Product Supplier</label>
-                                <select class="form-select" id="product_garage" name="product_garage" required>
+                                <label class="form-label pt-0" for="supplier_id">Product Supplier</label>
+                                <select class="form-select" id="supplier_id" name="supplier_id" required>
                                     <option value="">-- Select a supplier</option>
                                     @foreach ($supplier as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
@@ -62,20 +67,32 @@
                         </div>
                         <div class="col-sm-12 col-md-3">
                             <div class="mb-3">
-                                <label class="form-label" for="price">Shop Name</label>
-                                <input class="form-control" type="number" id="price" name="price" placeholder="Price $" required>
+                                <label class="form-label" for="product_code">Product Code</label>
+                                <input class="form-control" type="text" id="product_code" name="product_code" placeholder="Product Code" required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3">
                             <div class="mb-3">
-                                <label class="form-label" for="price">Price</label>
-                                <input class="form-control" type="number" id="price" name="price" placeholder="Price $" required>
+                                <label class="form-label" for="buying_price">Buying Price</label>
+                                <input class="form-control" type="number" id="buying_price" name="buying_price" placeholder="Buying Price" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="selling_price">Selling Price</label>
+                                <input class="form-control" type="number" id="selling_price" name="selling_price" placeholder="Selling Price" required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3">
                             <div class="mb-3">
                                 <label class="form-label" for="quantity">Quantity</label>
                                 <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Quantity" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="buy_date">Buying Date</label>
+                                <input class="form-control" type="date" id="buy_date" name="buy_date" placeholder="Buying Date" required>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -166,7 +183,7 @@ $('#productAdd').on('submit', function (e) {
                 return xhr;
             },
             success: function (data) {
-                $('input[type=text]').val('');
+                $('input').val('');
                 $('select').val('');
                 $('textarea').val('');
                 notyf.success("Product Saved Successfully!");
@@ -179,3 +196,5 @@ $('#productAdd').on('submit', function (e) {
 </script>
 
 @endsection
+
+

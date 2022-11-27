@@ -45954,7 +45954,10 @@ table tr{
     border: none;
 }
 /* Form Custom CSS || End */
-
+.img-thumbnail {
+    height: 50px;
+    width: auto !important;
+}
 .img_box_100{
     position: relative;
     cursor: pointer;

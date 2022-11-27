@@ -19,19 +19,15 @@ return new class extends Migration
             $table->integer('subcategory_id');
             $table->string('title');
             $table->string('slug');
-            $table->integer('price');
             $table->integer('quantity');
             $table->text('description');
-            $table->string('author');
+            $table->integer('supplier_id');
             $table->string('picture')->nullable();
-            $table->string('status')->default(1);
             $table->string('product_code');
-            $table->string('product_garage');
-            $table->string('product_route');
             $table->string('buy_date');
-            $table->string('expire_date');
             $table->string('buying_price');
             $table->string('selling_price');
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

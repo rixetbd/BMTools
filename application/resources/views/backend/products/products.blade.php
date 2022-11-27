@@ -16,7 +16,13 @@
         <div class="col-sm-12 col-md-12">
             <div class="card">
                 <div class="card-header pb-0">
-                    <h5>Products List</h5>
+                    <h5>Products List
+                            <span class="float-end">
+                            <a class="btn btn-primary" href="{{route('backend.products.create')}}">
+                                <i class="fa fa-plus"></i> Add Product
+                            </a>
+                        </span>
+                    </h5>
                     <span>All Products Information</span>
                 </div>
 
@@ -29,7 +35,8 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Sub Category</th>
-                                    <th scope="col">Price</th>
+                                    <th scope="col">Buying Price</th>
+                                    <th scope="col">Selling Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Picture</th>
                                     <th scope="col" class="text-center">Action</th>
@@ -103,8 +110,10 @@ $('.gallery a').simpleLightbox();
                 data: 'subcategory_name'
             },
             {
-                className: "text-center",
-                data: 'price'
+                data: 'buying_price'
+            },
+            {
+                data: 'selling_price'
             },
             {
                 className: "text-center",
