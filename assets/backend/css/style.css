@@ -45975,3 +45975,14 @@ table tr{
 .img_box_100:hover .img_box_overly{
     bottom: 0%;
 }
+
+.nav-submenu.menu-content.active{
+    display: block !important;
+}
+
+.main-navbar .nav-menu .dropdown ul.nav-submenu li a.active,
+.main-navbar .nav-menu .dropdown ul.nav-submenu li a:hover{
+    font-weight: 600 !important;
+}
+
+

@@ -40,8 +40,8 @@
                                 <div class="profile-title">
                                     <div class="media">
                                         @if ($user)
-                                        <div class="img_box_100">
-                                            <img id="user_pic" class="img-fluid rounded-circle"
+                                        <div class="img_box_100" id="img_box_100">
+                                            <img id="user_pic" class="img-fluid"
                                                 src="{{asset('application/uploads/users')}}/{{($user->avatar != ''?$user->avatar:'default.png')}}"
                                                 alt="">
                                         </div>
@@ -149,6 +149,7 @@
 
 
 @section('custom_script')
+
 <script>
     $('.edit_bio').click(function () {
         if ($('.edit_bio i').hasClass('fa-edit')) {
@@ -158,6 +159,10 @@
             $('#user_bio').attr('disabled', '');
             $('.edit_bio').html('<i class="fa fa-edit"></i>');
         }
+    });
+
+    $('#img_box_100').click(() => {
+        $('#picture').click();
     });
 
 </script>

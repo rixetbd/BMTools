@@ -282,21 +282,30 @@ $currentRouteName = Route::currentRouteName();
                                         {{$currentRouteName == "backend.subcategories.index"?"active":" "}}"
                                         href="javascript:void(0)"><i
                                             data-feather="airplay"></i><span>Products</span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a href="{{route('backend.categories.index')}}">Categories</a></li>
-                                        <li><a href="{{route('backend.subcategories.index')}}">Sub Categories</a></li>
-                                        <li><a href="{{route('backend.products.index')}}">Products List</a></li>
-                                        <li><a href="{{route('backend.products.create')}}">Products Create</a></li>
+
+                                            <ul class="nav-submenu menu-content
+                                    {{$currentRouteName == "backend.categories.index"?"active":" "}}
+                                    {{$currentRouteName == "backend.products.index"?"active":" "}}
+                                    {{$currentRouteName == "backend.products.create"?"active":" "}}
+                                    {{$currentRouteName == "backend.subcategories.index"?"active":" "}}">
+
+                                        <li><a href="{{route('backend.categories.index')}}" class="{{$currentRouteName == "backend.categories.index"?"active":" "}}">Categories</a></li>
+                                        <li><a href="{{route('backend.subcategories.index')}}" class="{{$currentRouteName == "backend.subcategories.index"?"active":" "}}">Sub Categories</a></li>
+                                        <li><a href="{{route('backend.products.index')}}" class="{{$currentRouteName == "backend.products.index"?"active":" "}}">Products List</a></li>
+                                        <li><a href="{{route('backend.products.create')}}" class="{{$currentRouteName == "backend.products.create"?"active":" "}}">Products Create</a></li>
                                     </ul>
                                 </li>
 
                                 <li class="dropdown"><a class="nav-link menu-title
-                                    {{$currentRouteName == "backend.employee.index"?"active":" "}}"
+                                    {{$currentRouteName == "backend.employee.index"?"active":" "}}
+                                    {{$currentRouteName == "backend.salary.index"?"active":" "}}"
                                         href="javascript:void(0)"><i
                                             data-feather="airplay"></i><span>Employee</span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a href="{{route('backend.employee.index')}}">All Employees</a></li>
-                                        <li><a href="{{route('backend.salary.index')}}">Salary</a></li>
+                                    <ul class="nav-submenu menu-content
+                                    {{$currentRouteName == "backend.employee.index"?"active":" "}}
+                                    {{$currentRouteName == "backend.salary.index"?"active":" "}}">
+                                        <li><a href="{{route('backend.employee.index')}}" class="{{$currentRouteName == "backend.employee.index"?"active":" "}}">All Employees</a></li>
+                                        <li><a href="{{route('backend.salary.index')}}" class="{{$currentRouteName == "backend.salary.index"?"active":" "}}">Salary</a></li>
                                     </ul>
                                 </li>
 
@@ -304,8 +313,9 @@ $currentRouteName = Route::currentRouteName();
                                     {{$currentRouteName == "backend.customers.index"?"active":" "}}"
                                         href="javascript:void(0)"><i
                                             data-feather="airplay"></i><span>Customers</span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a href="{{route('backend.customers.index')}}">All Customers</a></li>
+                                    <ul class="nav-submenu menu-content
+                                    {{$currentRouteName == "backend.customers.index"?"active":" "}}">
+                                        <li><a href="{{route('backend.customers.index')}}" class="{{$currentRouteName == "backend.customers.index"?"active":" "}}">All Customers</a></li>
                                     </ul>
                                 </li>
 
@@ -313,8 +323,8 @@ $currentRouteName = Route::currentRouteName();
                                     {{$currentRouteName == "backend.suppliers.index"?"active":" "}}"
                                         href="javascript:void(0)"><i
                                             data-feather="airplay"></i><span>Suppliers</span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a href="{{route('backend.suppliers.index')}}">All Suppliers</a></li>
+                                    <ul class="nav-submenu menu-content {{$currentRouteName == "backend.suppliers.index"?"active":" "}}">
+                                        <li><a href="{{route('backend.suppliers.index')}}" class="{{$currentRouteName == "backend.suppliers.index"?"active":" "}}">All Suppliers</a></li>
                                     </ul>
                                 </li>
 
@@ -322,9 +332,8 @@ $currentRouteName = Route::currentRouteName();
                                 <li class="dropdown"><a
                                         class="nav-link menu-title {{$currentRouteName == "backend.user.index"?"active":" "}}"
                                         href="javascript:void(0)"><i data-feather="users"></i><span>Users</span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a
-                                                href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a>
+                                    <ul class="nav-submenu menu-content {{$currentRouteName == "backend.user.index"?"active":" "}}">
+                                        <li><a class="{{$currentRouteName == "backend.user.index"?"active":" "}}" href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a>
                                         </li>
                                     </ul>
                                 </li>
