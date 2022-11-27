@@ -214,8 +214,7 @@
         }
     });
 
-
-    $('#emp_id').on('change', function(){
+    function getsalary(){
         $.ajax({
             type: "POST",
             url: `{{route('backend.employee.getsalary')}}`,
@@ -234,6 +233,18 @@
                 notyf.error('Customer Delete Unsuccessfully!');
             }
         });
+    }
+
+    $('#emp_id').on('change', function(){
+        getsalary();
+    });
+
+    $('#salary_month').on('change', function(){
+        getsalary();
+    });
+
+    $('#salary_year').on('change', function(){
+        getsalary();
     });
 
 

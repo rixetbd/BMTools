@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('salary_month');
             $table->integer('salary_year');
             $table->integer('paid_amount');
-            $table->integer('bonus')->default('0');
+            $table->integer('bonus')->nullable();
             $table->timestamps();
         });
     }

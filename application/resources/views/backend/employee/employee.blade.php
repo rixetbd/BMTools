@@ -153,7 +153,7 @@
 
     $('#add_employee').click(() => {
         $('#user_pic').attr('src', 'application/uploads/users/default.png');
-        $('input[type=text]').val('');
+        $('input').val('');
         $('#CategoryEditModal').modal('show');
     });
 

@@ -56,7 +56,7 @@ class SalaryController extends Controller
             'salary_month' => $request->salary_month,
             'salary_year' => $request->salary_year,
             'paid_amount' => $request->payable_amount,
-            'bonus' => $request->bonus,
+            'bonus' => ($request->bonus != ''?$request->bonus:'0'),
             'created_at' => Carbon::now()
         ]);
 
