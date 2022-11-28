@@ -80,14 +80,14 @@
                         </div>
                         <div class="col-6 mb-3">
                             <label class="col-form-label pt-0" for="salary_year">Salary Year</label>
-                            <select class="form-select" id="salary_year" name="salary_year" >
+                            <select class="form-select" id="salary_year" name="salary_year">
                                 <option value="">-- Select a year</option>
                                 @php
-                                    $loopYear = date('Y');
+                                $loopYear = date('Y');
                                 @endphp
-                                @for ($i = $loopYear - 1; $i < $loopYear + 2; $i++)
-                                    <option value="{{$i}}" {{($i == $loopYear?'selected':'')}}>{{$i}}</option>
-                                @endfor
+                                @for ($i = $loopYear - 1; $i < $loopYear + 2; $i++) <option value="{{$i}}"
+                                    {{($i == $loopYear?'selected':'')}}>{{$i}}</option>
+                                    @endfor
                             </select>
                         </div>
                     </div>
@@ -95,12 +95,12 @@
                         <div class="col-6 mb-3">
                             <label class="col-form-label pt-0" for="salary_main">Salary</label>
                             <input class="form-control" id="salary_main" type="number" name="salary_main"
-                            placeholder="Salary" disabled>
+                                placeholder="Salary" disabled>
                         </div>
                         <div class="col-6 mb-3">
                             <label class="col-form-label pt-0" for="already_paid">Already Paid</label>
                             <input class="form-control" id="already_paid" type="number" name="already_paid"
-                            placeholder="Already Paid" disabled>
+                                placeholder="Already Paid" disabled>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -144,10 +144,12 @@
         $('#CategoryEditModal').modal('show');
     });
 
-    function getMonth(){
-        const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    function getMonth() {
+        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+            "November", "December"
+        ];
         const d = new Date();
-        let lastMonth = month[d.getMonth() -1];
+        let lastMonth = month[d.getMonth() - 1];
         var monthHtml = "";
         for (let i = 0; i < month.length; i++) {
             if (month[i] == lastMonth) {
@@ -214,7 +216,7 @@
         }
     });
 
-    function getsalary(){
+    function getsalary() {
         $.ajax({
             type: "POST",
             url: `{{route('backend.employee.getsalary')}}`,
@@ -235,15 +237,15 @@
         });
     }
 
-    $('#emp_id').on('change', function(){
+    $('#emp_id').on('change', function () {
         getsalary();
     });
 
-    $('#salary_month').on('change', function(){
+    $('#salary_month').on('change', function () {
         getsalary();
     });
 
-    $('#salary_year').on('change', function(){
+    $('#salary_year').on('change', function () {
         getsalary();
     });
 
@@ -279,21 +281,58 @@
     }
 
     function cat_distroy(id) {
-        let formUrlData = `{{route('backend.salary.destroy')}}`;
-        $.ajax({
-            type: "POST",
-            url: `${formUrlData}`,
-            data: {
-                "id": id,
-            },
-            success: function (data) {
-                $('#dataTableStyle').DataTable().ajax.reload();
-                notyf.success("Salary Delete Successfully!");
-            },
-            error: function (request, status, error) {
-                notyf.error('Salary Delete Unsuccessfully!');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#24695c',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let formUrlData = `{{route('backend.salary.destroy')}}`;
+                $.ajax({
+                    type: "POST",
+                    url: `${formUrlData}`,
+                    data: {
+                        "id": id,
+                    },
+                    success: function (data) {
+                        $('#dataTableStyle').DataTable().ajax.reload();
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    },
+                    error: function (request, status, error) {
+                        notyf.error('Salary Delete Unsuccessfully!');
+                    }
+                });
             }
         });
+
+
+
+
+
+
+        // let formUrlData = `{{route('backend.salary.destroy')}}`;
+        // $.ajax({
+        //     type: "POST",
+        //     url: `${formUrlData}`,
+        //     data: {
+        //         "id": id,
+        //     },
+        //     success: function (data) {
+        //         $('#dataTableStyle').DataTable().ajax.reload();
+        //         notyf.success("Salary Delete Successfully!");
+        //     },
+        //     error: function (request, status, error) {
+        //         notyf.error('Salary Delete Unsuccessfully!');
+        //     }
+        // });
     }
 
 </script>

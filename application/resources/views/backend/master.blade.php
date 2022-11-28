@@ -53,6 +53,9 @@ $currentRouteName = Route::currentRouteName();
     <link id="color" rel="stylesheet" href="{{asset('assets/backend')}}/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/responsive.css">
+
+    <!-- sweetalert2 css-->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/backend')}}/css/sweetalert2.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
     @yield('custom_style')
@@ -431,6 +434,9 @@ $currentRouteName = Route::currentRouteName();
     <!-- latest jquery-->
     {{-- <script src="{{asset('assets/backend')}}/js/jquery-3.5.1.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <!-- sweetalert js-->
+    <script src="{{asset('assets/backend')}}/js/sweet-alert/sweetalert.min.js"></script>
 
     <!-- feather icon js-->
     <script src="{{asset('assets/backend')}}/js/icons/feather-icon/feather.min.js"></script>
