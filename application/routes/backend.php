@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Products\CategoryController;
 use App\Http\Controllers\Products\SubCategoryController;
+use App\Http\Controllers\Settings\SettingController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,15 @@ Route::middleware('auth')->group(function(){
         Route::post('/destroy', 'destroy')->name('backend.subcategories.destroy');
         Route::get('/autosubcategories', 'autosubcategories')->name('autosubcategories');
         Route::post('/get-subcategory-auto', 'get_subcategory_auto')->name('backend.get_subcategory_auto');
+    });
+
+
+    Route::controller(SettingController::class)->prefix('settings')->group(function(){
+        Route::get('/index', 'index')->name('backend.settings.index');
+        Route::post('/store', 'store')->name('backend.settings.store');
+        Route::post('/update', 'update')->name('backend.settings.update');
+        Route::post('/destroy', 'destroy')->name('backend.settings.destroy');
+        Route::get('/autoSettings', 'autoSettings')->name('backend.settings.autoSettings');
     });
 
 });

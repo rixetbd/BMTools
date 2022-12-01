@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class SettingController extends Controller
 {
@@ -14,7 +19,10 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+       $settings = Settings::where('status', '1')->first();
+        return view('backend.settings.index',[
+            'settings'=>$settings,
+        ]);
     }
 
     /**
@@ -67,9 +75,48 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $settings_last = Settings::where('status', '1')->first();
+        if ($settings_last) {
+            $settings_last->update(['status'=>'0']);
+        }
+
+        $settings = Settings::insertGetId([
+                'company_name' =>$request->company_name,
+                'company_email' =>$request->company_email,
+                'company_phone' =>$request->company_phone,
+                'company_logo' =>($settings_last != ''?$settings_last->company_logo:''),
+                'company_address' =>$request->company_address,
+                'company_city' =>$request->company_city,
+                'company_country' =>$request->company_country,
+                'company_website' =>$request->company_website,
+                'created_at' =>Carbon::now(),
+        ]);
+
+        if($request->hasFile('company_logo'))
+        {
+            $image = $request->file('company_logo');
+            $filename = Str::slug($request->company_name). '-'.rand(1,9) . '.' . $image->getClientOriginalExtension();
+            $path = base_path('uploads/company/' . $filename);
+            Image::make($image)->fit(400, 300)->save($path);
+            Settings::find($settings)->update([
+                'company_logo'=>$filename,
+            ]);
+        }
+
+        $settings_old = Settings::where('status', '0')->get();
+        foreach ($settings_old as $value) {
+            $img_path = base_path('uploads/company/'.$value->company_logo);
+            if(File::exists($img_path)) {
+                File::delete($img_path);
+            }
+        }
+        Settings::where('status', '0')->delete();
+
+        return response()->json([
+            'success'=>'success'
+        ]);
     }
 
     /**
@@ -81,5 +128,11 @@ class SettingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function autoSettings()
+    {
+        $settings = Settings::where('status', '1')->first();
+        return $settings;
     }
 }
