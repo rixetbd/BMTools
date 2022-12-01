@@ -17,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function(){
 
     Route::controller(UsersController::class)->prefix('users')->group(function(){
+        Route::get('/profile/{username}', 'index')->name('backend.user.index');
+        Route::get('/allusers-view', 'allusers')->name('backend.user.all');
+        Route::post('/store', 'store')->name('backend.users.store');
+        Route::post('/destroy', 'destroy')->name('backend.users.destroy');
         Route::post('/autoauth', 'autoauth')->name('backend.user.autoauth');
-
-        Route::get('/{username}', 'index')->name('backend.user.index');
+        Route::get('/autoallusers', 'autoallusers')->name('backend.user.autoallusers');
         Route::post('/update', 'update')->name('backend.user.update');
     });
 

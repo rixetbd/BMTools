@@ -27,8 +27,8 @@ Route::middleware('auth')->group(function(){
 
     Route::controller(SettingController::class)->prefix('settings')->group(function(){
         Route::get('/index', 'index')->name('backend.settings.index');
-        Route::get('/store', 'store')->name('backend.settings.store');
-        Route::post('/update', 'update')->name('backend.settings.update');
-        Route::post('/destroy', 'destroy')->name('backend.settings.destroy');
+        // Route::get('/store', 'store')->name('backend.settings.store');
+        // Route::post('/update', 'update')->name('backend.settings.update');
+        // Route::post('/destroy', 'destroy')->name('backend.settings.destroy');
     });
 });

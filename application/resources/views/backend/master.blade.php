@@ -346,11 +346,11 @@ $currentRouteName = Route::currentRouteName();
 
 
                                 <li class="dropdown"><a
-                                        class="nav-link menu-title {{$currentRouteName == "backend.user.index"?"active":" "}}"
+                                        class="nav-link menu-title {{$currentRouteName == "backend.user.index"?"active":" "}} {{$currentRouteName == "backend.user.all"?"active":" "}}"
                                         href="javascript:void(0)"><i data-feather="users"></i><span>Users</span></a>
-                                    <ul class="nav-submenu menu-content {{$currentRouteName == "backend.user.index"?"active":" "}}">
-                                        <li><a class="{{$currentRouteName == "backend.user.index"?"active":" "}}" href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a>
-                                        </li>
+                                    <ul class="nav-submenu menu-content {{$currentRouteName == "backend.user.index"?"active":" "}} {{$currentRouteName == "backend.user.all"?"active":" "}}">
+                                        <li><a class="{{$currentRouteName == "backend.user.all"?"active":" "}}" href="{{route('backend.user.all')}}">All Users</a></li>
+                                        <li><a class="{{$currentRouteName == "backend.user.index"?"active":" "}}" href="{{route('backend.user.index', Auth::user()->username)}}">Profile</a></li>
                                     </ul>
                                 </li>
 

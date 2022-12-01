@@ -35,7 +35,7 @@
                         <form class="" action="{{route('backend.user.update')}}" method="POST"
                             enctype="multipart/form-data" id="userUpdate">
                             @csrf
-                            <input type="hidden" name="id" value="{{$user->id}}">
+                            {{-- <input type="hidden" name="id" value="{{$user->id}}"> --}}
                             <div class="row mb-2">
                                 <div class="profile-title">
                                     <div class="media">

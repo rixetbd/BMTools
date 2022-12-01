@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -23,6 +24,18 @@ class UsersController extends Controller
         return view('backend.users.profile',[
             'user'=>$user,
         ]);
+    }
+
+    public function allusers()
+    {
+        // $user = User::all();
+        return view('backend.users.userslist');
+    }
+
+    public function autoallusers()
+    {
+        $userData = User::where('id','!=', Auth::user()->id)->get();
+        return $userData;
     }
 
     /**
@@ -43,7 +56,37 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' =>'required|email|unique:users,email',
+            'password' =>'required',
+            // 'confirm_password' => 'required_with:password|same:password',
+            'role' =>'required',
+        ]);
+
+        $userID = User::insertGetId([
+            'name' => $request->name,
+            'username' => Str::slug($request->name).'-'.rand(101,999),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        if($request->hasFile('picture'))
+            {
+                $image = $request->file('picture');
+                $filename = Str::slug($request->name). '-'.Str::slug($request->phone). '.' . $image->getClientOriginalExtension();
+                $path = base_path('uploads/users/' . $filename);
+                Image::make($image)->fit(1000, 1000)->save($path);
+
+                User::find($userID)->update([
+                    'avatar'=>$filename,
+                ]);
+        }
+        return response()->json([
+            'success'=>'success'
+        ]);
+
     }
 
     /**
@@ -109,9 +152,16 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $user = User::where('id', $request->id)->first();
+
+        $img_path = base_path('uploads/users/'.$user->avater);
+        if(File::exists($img_path)) {
+            File::delete($img_path);
+        }
+        $user->delete();
+        return response()->json(['success' => 'success',]);
     }
 
     public function autoauth(){
